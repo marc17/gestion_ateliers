@@ -7,407 +7,424 @@
 	<auteurCourriel> </auteurCourriel>
 	<auteurSite> </auteurSite>
 	<version>1.0</version>
-	<versiongepi>1.5.3</versiongepi>
+	<versiongepi>1.6.3</versiongepi>
 	<description>Gestion des ateliers</description>
 	<installation>
 		<requetes>
-		<requete>
-CREATE TABLE IF NOT EXISTS `bas_gestion_acces_scripts` (
-  `nom_champ` char(100) NOT NULL default '',
-  `content` char(100) NOT NULL default ''
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-		</requete>
-    <requete>
-INSERT INTO `bas_gestion_acces_scripts` (`nom_champ`, `content`) VALUES
-('mod_plugins/gestion_ateliers/admin_acces_scripts.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_acces_scripts.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_acces_scripts.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_acces_scripts.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_acces_scripts.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_acces_scripts.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_acces_scripts.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_acces_scripts.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_acces_scripts.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_acces_scripts.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_acces_scripts.php', 'admin'),
-('mod_plugins/gestion_ateliers/index.php', '_tous_'),
-('mod_plugins/gestion_ateliers/admin_bas.php', 'admin'),
-('mod_plugins/gestion_ateliers/modify_bas.php', '_tous_'),
-('mod_plugins/gestion_ateliers/index_listes.php', '_tous_'),
-('mod_plugins/gestion_ateliers/bas_par_classes.php', '_tous_'),
-('mod_plugins/gestion_ateliers/admin_inscrip_rapide.php', '_cpe_'),
-('mod_plugins/gestion_ateliers/admin_toutes_feuilles_presence.php', '_cpe_'),
-('mod_plugins/gestion_ateliers/admin_toutes_feuilles_presence2.php', '_cpe_'),
-('mod_plugins/gestion_ateliers/admin_index.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_index.php', '_cpe_'),
-('mod_plugins/gestion_ateliers/stats_bas.php', '_tous_'),
-('mod_plugins/gestion_ateliers/admin_stats.php', '_tous_'),
-('mod_plugins/gestion_ateliers/admin_bas_affectations.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_bas_salles.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_prof_suivi.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_bases.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_bas_config.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_matiere_index.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_matiere_modify.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_user_index.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_user_modify.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_tab_profs_matieres.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_salles_index.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_salles_modify.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_stats2.php', 'admin'),
-('mod_plugins/gestion_ateliers/index_suivi.php', '_tous_'),
-('mod_plugins/gestion_ateliers/index_eleve.php', '_tous_'),
-('mod_plugins/gestion_ateliers/admin_modif_choix1.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_toutes_feuilles_presence.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_toutes_feuilles_presence2.php', 'admin'),
-('mod_plugins/gestion_ateliers/admin_inscrip_rapide.php', 'admin'),
-('mod_plugins/gestion_ateliers/inscrire_eleves_par_atelier.php', 'admin'),
-('mod_plugins/gestion_ateliers/inscrire_eleves_par_atelier.php', '_cpe_'),
-('mod_plugins/gestion_ateliers/admin_user_bas_absences.php', 'admin'),
-('mod_plugins/gestion_ateliers/liste_bas_par_eleve.php', 'professeur'),
-('mod_plugins/gestion_ateliers/index_inscrits.php', '_tous_'),
-('mod_plugins/gestion_ateliers/droit_special_modify_bas.txt', 'admin'),
-('mod_plugins/gestion_ateliers/droit_special_index.txt', 'admin'),
-('mod_plugins/gestion_ateliers/droit_special_index_suivi.txt', 'admin'),
-('mod_plugins/gestion_ateliers/droit_special_inscrip_rapide.txt', 'admin');
-		</requete>
-    <requete>
-CREATE TABLE IF NOT EXISTS `bas_bas` (
-  `id_bas` int(11) NOT NULL default '0',
-  `nom` varchar(50) NOT NULL default 'BAS N°',
-  `date_bas` varchar(10) NOT NULL default '',
-  `date_limite` varchar(10) NOT NULL default '',
-  `close_bas` char(1) NOT NULL default '',
-  `description_bas` varchar(100) NOT NULL default 'après-midi',
-  `inscription_bas` char(1) NOT NULL default 'n',
-  `aff_liste_par_classe` char(1) NOT NULL default 'n',
-  `aff_affectations_eleves` char(1) NOT NULL default 'n',
-  `modif_affectations_bas_cpe` char(1) NOT NULL default 'n',
-  `num_periode` smallint(6) NOT NULL default '1',
-  `qui_inscrit` char(2) NOT NULL default 'p',
-  `active_blocage` char(1) NOT NULL default 'n',
-  `type_bas` char(1) NOT NULL default 'n',
-  `bas_passee` varchar(1) NOT NULL default 'n',
-  `aut_insc_eleve` varchar(1) NOT NULL default 'n'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-</requete>
-<requete>
-CREATE TABLE IF NOT EXISTS `bas_j_eleves_bas_insc` (
-  `id_eleve` varchar(50) NOT NULL default '',
-  `num_choix` smallint(6) NOT NULL default '0',
-  `num_sequence` smallint(6) NOT NULL default '0',
-  `num_bas` smallint(6) NOT NULL default '0',
-  `aut_insc_eleve` char(1) NOT NULL default '',
-  PRIMARY KEY  (`id_eleve`(10),`num_bas`,`num_sequence`,`num_choix`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-</requete>
-<requete>
-CREATE TABLE IF NOT EXISTS `bas_eleves_insc_bas` (
-  `login` varchar(50) NOT NULL,
-  `num_sequence` smallint(6) NOT NULL,
-  `num_bas` smallint(6) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-</requete>
-<requete>
-CREATE TABLE IF NOT EXISTS `bas_classes` (
-  `id_classe` smallint(6) unsigned NOT NULL default '0',
-  `nom_classe` varchar(100) NOT NULL default '',
-  `nom_complet_classe` varchar(100) NOT NULL default '',
-  KEY `id` (`id_classe`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-</requete>
-<requete>
-CREATE TABLE IF NOT EXISTS `bas_creneaux` (
-  `id_bas` int(11) NOT NULL default '0',
-  `num_creneau` smallint(6) NOT NULL default '0',
-  `intitule_creneau` varchar(100) NOT NULL default ''
-);
-</requete>
-<requete>
-CREATE TABLE IF NOT EXISTS `bas_creneaux` (
-  `id_bas` int(11) NOT NULL default '0',
-  `num_creneau` smallint(6) NOT NULL default '0',
-  `intitule_creneau` varchar(100) NOT NULL default ''
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-</requete>
-<requete>
-CREATE TABLE IF NOT EXISTS `bas_j_eleves_bas` (
-  `id_eleve` varchar(50) NOT NULL default '',
-  `id_bas` varchar(50) NOT NULL default '',
-  `priorite` char(1) NOT NULL default '',
-  `num_choix` smallint(6) NOT NULL default '0',
-  `num_sequence` smallint(6) NOT NULL default '0',
-  `num_bas` smallint(6) NOT NULL default '0',
-  PRIMARY KEY  (`id_eleve`(10),`num_bas`,`num_sequence`,`num_choix`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-</requete>
-<requete>
-CREATE TABLE IF NOT EXISTS `bas_j_eleves_bas_insc` (
-  `id_eleve` varchar(50) NOT NULL default '',
-  `num_choix` smallint(6) NOT NULL default '0',
-  `num_sequence` smallint(6) NOT NULL default '0',
-  `num_bas` smallint(6) NOT NULL default '0',
-  `aut_insc_eleve` char(1) NOT NULL default '',
-  PRIMARY KEY  (`id_eleve`(10),`num_bas`,`num_sequence`,`num_choix`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-</requete>
-<requete>
-CREATE TABLE IF NOT EXISTS `bas_filieres` (
-  `nom_filiere` varchar(50) NOT NULL,
-  `id_filiere` smallint(6) NOT NULL,
-  `niveau_filiere` smallint(6) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-</requete>
-<requete>
-INSERT INTO `bas_filieres` (`nom_filiere`, `id_filiere`, `niveau_filiere`) VALUES
-('1ère L', 4, 2),
-('1ère ES', 3, 2),
-('Secondes', 1, 1),
-('1ère S', 2, 2),
-('1ère STI2D', 5, 2),
-('Term. S', 6, 3),
-('Term. ES', 7, 3),
-('Term. L', 8, 3),
-('Term. STI', 9, 3);
-</requete>
-<requete>
-CREATE TABLE IF NOT EXISTS `bas_j_eleves_filieres` (
-  `id_eleve` varchar(50) NOT NULL default '',
-  `id_filiere` varchar(50) NOT NULL default '',
-  PRIMARY KEY  (`id_eleve`(10))
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-</requete>
-<requete>
-CREATE TABLE IF NOT EXISTS `bas_imprime_feuilles_presence` (
-  `login` varchar(50) NOT NULL default '',
-  `imprime_feuilles_presence` char(1) NOT NULL default 'n'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-</requete>
-<requete>
-CREATE TABLE IF NOT EXISTS `bas_j_matieres_profs` (
-  `id_matiere` varchar(50) NOT NULL default '',
-  `id_professeur` varchar(50) NOT NULL default '',
-  PRIMARY KEY  (`id_matiere`,`id_professeur`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-</requete>
-<requete>
-CREATE TABLE IF NOT EXISTS `bas_j_professeurs_absences` (
-  `id_professeur` varchar(50) NOT NULL default '',
-  `id_bas` int(11) NOT NULL default '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-</requete>
-<requete>
-CREATE TABLE IF NOT EXISTS `bas_matieres` (
-  `matiere` varchar(50) NOT NULL default '',
-  `nom_complet` varchar(200) NOT NULL default '',
-  `nb_heures` smallint(6) NOT NULL default '0',
-  PRIMARY KEY  (`matiere`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-</requete>
-<requete>
-INSERT INTO `bas_matieres` (`matiere`, `nom_complet`, `nb_heures`) VALUES
-('ALLD', 'Allemand', 0),
-('ANGL', 'Anglais', 0),
-('APSC', 'Atel. de Prat. Scientifique', 0),
-('APLA', 'Arts plastiques', 0),
-('CRDI', 'Ressources documentaires', 0),
-('ENSC', 'Enseignement scientifique', 0),
-('EPS', 'E.P.S.', 0),
-('ESPN', 'Espagnol', 0),
-('FRAN', 'Français', 0),
-('GELN', 'Génie Electronique', 0),
-('HIGE', 'Histoire - Géographie', 0),
-('INFO', 'Informatique', 0),
-('ISI', 'Init. aux Sc. de l''Ingénieur', 0),
-('ISPR', 'Info. et Systèmes de Production', 0),
-('MATH', 'Mathématiques', 0),
-('ORIA', 'Orientation', 0),
-('PHAP', 'Physique appliquée', 0),
-('PHIL', 'Philosophie', 0),
-('SES', 'Sc. Economiques et Sociales', 0),
-('SCIN', 'Sc. de l''Ingénieur', 0),
-('SVT', 'Sc. de la Vie et de la Terre', 0),
-('GELC', 'Génie électrique', 0),
-('GMEC', 'Génie mécanique', 0),
-('PHCH', 'Physique - Chimie', 0),
-('VSCOL', 'Vie Scolaire', 0),
-('ACF', 'Activités Complémentaires de Formation', 0),
-('RADIO', 'Radio', 0),
-('INF', 'Infirmerie', 0),
-('TICEM', 'Tice et Media', 0),
-('INT', 'Ouverture Internationale', 0),
-('FLS', 'Français Langue de Scolarisation', 0),
-('METHO', 'Méthodologie', 0),
-('PID', 'Projet Interdisciplinaire Seconde', 0),
-('TPE', 'Travaux Personnels Encadrés', 0),
-('ENS_TRANS', 'Enseignement transversal technologique', 0),
-('CHIN', 'Chinois', 0),
-('LITT', 'Littératures', 0);
-</requete>
-<requete>
-CREATE TABLE IF NOT EXISTS `bas_propositions` (
-  `id_bas` int(11) NOT NULL auto_increment,
-  `type` char(1) NOT NULL default '',
-  `titre` varchar(100) NOT NULL default '',
-  `precisions` varchar(255) NOT NULL default '',
-  `responsable` varchar(50) NOT NULL default '',
-  `coresponsable` varchar(50) NOT NULL default '',
-  `id_matiere` varchar(50) NOT NULL default '',
-  `proprietaire` varchar(50) NOT NULL default '',
-  `num_bas` int(11) NOT NULL default '0',
-  `nb_max` int(11) NOT NULL default '0',
-  `salle` varchar(50) NOT NULL default '',
-  `duree` int(11) NOT NULL default '0',
-  `commentaire` mediumtext NOT NULL,
-  `public_1` varchar(5) NOT NULL default '',
-  `public_2` varchar(5) NOT NULL default '',
-  `public_3` varchar(5) NOT NULL default '',
-  `public_4` varchar(5) NOT NULL default '',
-  `public_5` varchar(5) NOT NULL default '',
-  `public_6` varchar(5) NOT NULL default '',
-  `public_7` varchar(5) NOT NULL default '',
-  `public_8` varchar(5) NOT NULL default '',
-  `public_9` varchar(5) NOT NULL default '',
-  `public_10` varchar(5) NOT NULL default '',
-  `public_11` varchar(5) NOT NULL default '',
-  `public_12` varchar(5) NOT NULL default '',
-  `public_13` varchar(5) NOT NULL default '',
-  `public_14` varchar(5) NOT NULL default '',
-  `public_15` varchar(5) NOT NULL default '',
-  `public_16` varchar(5) NOT NULL default '',
-  `public_17` varchar(5) NOT NULL default '',
-  `public_18` varchar(5) NOT NULL default '',
-  `public_19` varchar(5) NOT NULL default '',
-  `public_20` varchar(5) NOT NULL default '',
-  `id_prop` varchar(10) NOT NULL default '',
-  `debut_sequence` smallint(6) NOT NULL default '0',
-  `salle_final` varchar(50) NOT NULL default '',
-  `debut_final` smallint(6) NOT NULL default '0',
-  `statut` char(1) NOT NULL default 'v',
-  `nb_bloque` int(11) NOT NULL default '-1',
-  PRIMARY KEY  (`id_bas`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-</requete>
-<requete>
-CREATE TABLE IF NOT EXISTS `bas_salles` (
-  `id_salle` varchar(10) NOT NULL default '',
-  `nom_salle` varchar(50) NOT NULL default '',
-  `nom_court_salle` varchar(20) NOT NULL default '',
-  `special` char(1) NOT NULL default '',
-  `nb_places` smallint(6) NOT NULL default '0',
-  `materiel` varchar(5) NOT NULL default 'n'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-</requete>
-<requete>
-CREATE TABLE IF NOT EXISTS `bas_utilisateurs` (
-  `login` varchar(50) NOT NULL default '',
-  `nb_jury` smallint(6) NOT NULL default '0',
-  `service` float NOT NULL default '0',
-  `service_pb` float NOT NULL default '0',
-  `sous_service` float NOT NULL default '0',
-  PRIMARY KEY  (`login`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-    </requete>
-    </requetes>
+			<requete>
+			CREATE TABLE IF NOT EXISTS `bas_gestion_acces_scripts` (
+			  `nom_champ` char(100) NOT NULL default '',
+			  `content` char(100) NOT NULL default ''
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			</requete>
+			<requete>
+			INSERT INTO `bas_gestion_acces_scripts` (`nom_champ`, `content`) VALUES
+			('mod_plugins/gestion_ateliers/admin_acces_scripts.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_bas.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_bas_affectations.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_bas_config.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_bas_salles.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_bases.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_index.php', '_cpe_'),
+			('mod_plugins/gestion_ateliers/admin_index.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_inscrip_rapide.php', '_cpe_'),
+			('mod_plugins/gestion_ateliers/admin_inscrip_rapide.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_matiere_index.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_matiere_modify.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_modif_choix1.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_prof_suivi.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_salles_index.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_salles_modify.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_stats.php', '_tous_'),
+			('mod_plugins/gestion_ateliers/admin_stats2.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_tab_profs_matieres.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_toutes_feuilles_presence.php', '_cpe_'),
+			('mod_plugins/gestion_ateliers/admin_toutes_feuilles_presence.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_toutes_feuilles_presence2.php', '_cpe_'),
+			('mod_plugins/gestion_ateliers/admin_toutes_feuilles_presence2.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_user_bas_absences.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_user_details.php', '_professeur_'),
+			('mod_plugins/gestion_ateliers/admin_user_details.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_user_index.php', 'admin'),
+			('mod_plugins/gestion_ateliers/admin_user_modify.php', 'admin'),
+			('mod_plugins/gestion_ateliers/bas_par_classes.php', '_tous_'),
+			('mod_plugins/gestion_ateliers/droit_special_index.txt', 'admin'),
+			('mod_plugins/gestion_ateliers/droit_special_index_suivi.txt', 'admin'),
+			('mod_plugins/gestion_ateliers/droit_special_inscrip_rapide.txt', 'admin'),
+			('mod_plugins/gestion_ateliers/droit_special_modify_bas.txt', 'admin'),
+			('mod_plugins/gestion_ateliers/index.php', '_tous_'),
+			('mod_plugins/gestion_ateliers/index_inscrits.php', '_tous_'),
+			('mod_plugins/gestion_ateliers/index_listes.php', '_tous_'),
+			('mod_plugins/gestion_ateliers/index_suivi.php', '_tous_'),
+			('mod_plugins/gestion_ateliers/inscrire_eleves_par_atelier.php', 'admin'),
+			('mod_plugins/gestion_ateliers/inscrire_eleves_par_atelier.php', '_cpe_'),
+			('mod_plugins/gestion_ateliers/liste_bas_par_eleve.php', 'professeur'),
+			('mod_plugins/gestion_ateliers/modify_bas.php', '_tous_'),
+			('mod_plugins/gestion_ateliers/stats_bas.php', '_tous_');
+			</requete>
+			<requete>
+			CREATE TABLE IF NOT EXISTS `bas_bas` (
+			  `id_bas` int(11) NOT NULL default '0',
+			  `nom` varchar(50) NOT NULL default 'BAS N°',
+			  `date_bas` varchar(10) NOT NULL default '',
+			  `date_limite` varchar(10) NOT NULL default '',
+			  `close_bas` char(1) NOT NULL default '',
+			  `description_bas` varchar(100) NOT NULL default 'après-midi',
+			  `inscription_bas` char(1) NOT NULL default 'n',
+			  `aff_liste_par_classe` char(1) NOT NULL default 'n',
+			  `aff_affectations_eleves` char(1) NOT NULL default 'n',
+			  `modif_affectations_bas_cpe` char(1) NOT NULL default 'n',
+			  `num_periode` smallint(6) NOT NULL default '1',
+			  `qui_inscrit` char(2) NOT NULL default 'p',
+			  `active_blocage` char(1) NOT NULL default 'n',
+			  `type_bas` char(1) NOT NULL default 'n',
+			  `bas_passee` varchar(1) NOT NULL default 'n',
+			  `aut_insc_eleve` varchar(1) NOT NULL default 'n'
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			</requete>
+			<requete>
+			CREATE TABLE IF NOT EXISTS `bas_eleves_insc_bas` (
+			  `login` varchar(50) NOT NULL,
+			  `num_sequence` smallint(6) NOT NULL,
+			  `num_bas` smallint(6) NOT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			</requete>
+			<requete>
+			CREATE TABLE IF NOT EXISTS `bas_classes` (
+			  `id_classe` smallint(6) unsigned NOT NULL default '0',
+			  `nom_classe` varchar(100) NOT NULL default '',
+			  `nom_complet_classe` varchar(100) NOT NULL default '',
+			  KEY `id` (`id_classe`)
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			</requete>
+			<requete>
+			CREATE TABLE IF NOT EXISTS `bas_creneaux` (
+			  `id_bas` int(11) NOT NULL default '0',
+			  `num_creneau` smallint(6) NOT NULL default '0',
+			  `intitule_creneau` varchar(100) NOT NULL default ''
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			</requete>
+			<requete>
+			INSERT INTO `bas_creneaux` (`id_bas`, `num_creneau`, `intitule_creneau`) VALUES
+			(0, 1, '13h50'),
+			(0, 2, '15h45'),
+			(1, 1, '14h10'),
+			(1, 2, '15h30'),
+			(2, 1, '14h10'),
+			(2, 2, '15h30'),
+			(3, 1, '14h10'),
+			(3, 2, '15h30'),
+			(4, 1, '14h10'),
+			(4, 2, '15h30'),
+			(5, 1, '14h10'),
+			(5, 2, '15h30'),
+			(6, 1, '14h10'),
+			(6, 2, '15h30'),
+			(7, 1, '14h10'),
+			(7, 2, '15h30'),
+			(8, 1, '14h10'),
+			(8, 2, '15h30'),
+			(9, 1, '14h10'),
+			(9, 2, '15h30'),
+			(10, 1, '14h10'),
+			(10, 2, '15h30'),
+			(11, 1, '14h10'),
+			(11, 2, '15h30'),
+			(12, 1, '13h30'),
+			(13, 1, '10h15'),
+			(13, 2, '13h30'),
+			(13, 3, '15h30'),
+			(14, 1, '14h10'),
+			(14, 2, '15h30'),
+			(15, 1, '14h10'),
+			(15, 2, '15h30'),
+			(16, 1, '14h10'),
+			(16, 2, '15h30'),
+			(17, 1, '14h10'),
+			(17, 2, '15h30'),
+			(18, 1, '14h10'),
+			(18, 2, '15h30'),
+			(19, 1, '9h00'),
+			(19, 2, '10h30');
+			</requete>
+			<requete>
+			CREATE TABLE IF NOT EXISTS `bas_j_eleves_bas` (
+			  `id_eleve` varchar(50) NOT NULL default '',
+			  `id_bas` varchar(50) NOT NULL default '',
+			  `priorite` char(1) NOT NULL default '',
+			  `num_choix` smallint(6) NOT NULL default '0',
+			  `num_sequence` smallint(6) NOT NULL default '0',
+			  `num_bas` smallint(6) NOT NULL default '0',
+			  PRIMARY KEY  (`id_eleve`(10),`num_bas`,`num_sequence`,`num_choix`)
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			</requete>
+			<requete>
+			CREATE TABLE IF NOT EXISTS `bas_j_eleves_bas_insc` (
+			  `id_eleve` varchar(50) NOT NULL default '',
+			  `num_choix` smallint(6) NOT NULL default '0',
+			  `num_sequence` smallint(6) NOT NULL default '0',
+			  `num_bas` smallint(6) NOT NULL default '0',
+			  `aut_insc_eleve` char(1) NOT NULL default '',
+			  PRIMARY KEY  (`id_eleve`(10),`num_bas`,`num_sequence`,`num_choix`)
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			</requete>
+			<requete>
+			CREATE TABLE IF NOT EXISTS `bas_filieres` (
+			  `nom_filiere` varchar(50) NOT NULL,
+			  `id_filiere` smallint(6) NOT NULL,
+			  `niveau_filiere` smallint(6) NOT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			</requete>
+			<requete>
+			INSERT INTO `bas_filieres` (`nom_filiere`, `id_filiere`, `niveau_filiere`) VALUES
+			('Secondes', 1, 1),
+			('1ère ES', 2, 2),
+			('1ère L', 3, 2),
+			('1ère S', 4, 2),
+			('1ère STI2D', 5, 2),
+			('Term. ES', 6, 3),
+			('Term. L', 7, 3),
+			('Term. S', 8, 3),
+			('Term. STI', 9, 3);
+			</requete>
+			<requete>
+			CREATE TABLE IF NOT EXISTS `bas_j_eleves_filieres` (
+			  `id_eleve` varchar(50) NOT NULL default '',
+			  `id_filiere` varchar(50) NOT NULL default '',
+			  PRIMARY KEY  (`id_eleve`(10))
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			</requete>
+			<requete>
+			CREATE TABLE IF NOT EXISTS `bas_imprime_feuilles_presence` (
+			  `login` varchar(50) NOT NULL default '',
+			  `imprime_feuilles_presence` char(1) NOT NULL default 'n'
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			</requete>
+			<requete>
+			CREATE TABLE IF NOT EXISTS `bas_j_matieres_profs` (
+			  `id_matiere` varchar(50) NOT NULL default '',
+			  `id_professeur` varchar(50) NOT NULL default '',
+			  PRIMARY KEY  (`id_matiere`,`id_professeur`)
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			</requete>
+			<requete>
+			CREATE TABLE IF NOT EXISTS `bas_j_professeurs_absences` (
+			  `id_professeur` varchar(50) NOT NULL default '',
+			  `id_bas` int(11) NOT NULL default '0'
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			</requete>
+			<requete>
+			CREATE TABLE IF NOT EXISTS `bas_matieres` (
+			  `matiere` varchar(50) NOT NULL default '',
+			  `nom_complet` varchar(200) NOT NULL default '',
+			  `nb_heures` smallint(6) NOT NULL default '0',
+			  PRIMARY KEY  (`matiere`)
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			</requete>
+			<requete>
+			INSERT INTO `bas_matieres` (`matiere`, `nom_complet`, `nb_heures`) VALUES
+			('ACF', 'Activités Complémentaires de Formation', 0),
+			('ALLD', 'Allemand', 0),
+			('ANGL', 'Anglais', 0),
+			('APLA', 'Arts plastiques', 0),
+			('APSC', 'Atel. de Prat. Scientifique', 0),
+			('CHIN', 'Chinois', 0),
+			('CRDI', 'Ressources documentaires', 0),
+			('ENS_TRANS', 'Enseignement transversal technologique', 0),
+			('ENSC', 'Enseignement scientifique', 0),
+			('EPS', 'E.P.S.', 0),
+			('ESPN', 'Espagnol', 0),
+			('FLS', 'Français Langue de Scolarisation', 0),
+			('FRAN', 'Français', 0),
+			('GELC', 'Génie électrique', 0),
+			('GELN', 'Génie Electronique', 0),
+			('GMEC', 'Génie mécanique', 0),
+			('HIGE', 'Histoire - Géographie', 0),
+			('INF', 'Infirmerie', 0),
+			('INFO', 'Informatique', 0),
+			('INT', 'Ouverture Internationale', 0),
+			('ISI', 'Init. aux Sc. de l''Ingénieur', 0),
+			('ISPR', 'Info. et Systèmes de Production', 0),
+			('LITT', 'Littératures', 0),
+			('MATH', 'Mathématiques', 0),
+			('METHO', 'Méthodologie', 0),
+			('ORIA', 'Orientation', 0),
+			('PHAP', 'Physique appliquée', 0),
+			('PHCH', 'Physique - Chimie', 0),
+			('PHIL', 'Philosophie', 0),
+			('PID', 'Projet Interdisciplinaire Seconde', 0),
+			('RADIO', 'Radio', 0),
+			('SCIN', 'Sc. de l''Ingénieur', 0),
+			('SES', 'Sc. Economiques et Sociales', 0),
+			('SVT', 'Sc. de la Vie et de la Terre', 0),
+			('TICEM', 'Tice et Media', 0),
+			('TPE', 'Travaux Personnels Encadrés', 0),
+			('VSCOL', 'Vie Scolaire', 0);
+			</requete>
+			<requete>
+			CREATE TABLE IF NOT EXISTS `bas_propositions` (
+			  `id_bas` int(11) NOT NULL auto_increment,
+			  `type` char(1) NOT NULL default '',
+			  `titre` varchar(100) NOT NULL default '',
+			  `precisions` varchar(255) NOT NULL default '',
+			  `responsable` varchar(50) NOT NULL default '',
+			  `coresponsable` varchar(50) NOT NULL default '',
+			  `id_matiere` varchar(50) NOT NULL default '',
+			  `proprietaire` varchar(50) NOT NULL default '',
+			  `num_bas` int(11) NOT NULL default '0',
+			  `nb_max` int(11) NOT NULL default '0',
+			  `salle` varchar(50) NOT NULL default '',
+			  `duree` int(11) NOT NULL default '0',
+			  `commentaire` mediumtext NOT NULL,
+			  `public_1` varchar(5) NOT NULL default '',
+			  `public_2` varchar(5) NOT NULL default '',
+			  `public_3` varchar(5) NOT NULL default '',
+			  `public_4` varchar(5) NOT NULL default '',
+			  `public_5` varchar(5) NOT NULL default '',
+			  `public_6` varchar(5) NOT NULL default '',
+			  `public_7` varchar(5) NOT NULL default '',
+			  `public_8` varchar(5) NOT NULL default '',
+			  `public_9` varchar(5) NOT NULL default '',
+			  `public_10` varchar(5) NOT NULL default '',
+			  `public_11` varchar(5) NOT NULL default '',
+			  `public_12` varchar(5) NOT NULL default '',
+			  `public_13` varchar(5) NOT NULL default '',
+			  `public_14` varchar(5) NOT NULL default '',
+			  `public_15` varchar(5) NOT NULL default '',
+			  `public_16` varchar(5) NOT NULL default '',
+			  `public_17` varchar(5) NOT NULL default '',
+			  `public_18` varchar(5) NOT NULL default '',
+			  `public_19` varchar(5) NOT NULL default '',
+			  `public_20` varchar(5) NOT NULL default '',
+			  `id_prop` varchar(10) NOT NULL default '',
+			  `debut_sequence` smallint(6) NOT NULL default '0',
+			  `salle_final` varchar(50) NOT NULL default '',
+			  `debut_final` smallint(6) NOT NULL default '0',
+			  `statut` char(1) NOT NULL default 'v',
+			  `nb_bloque` int(11) NOT NULL default '-1',
+			  PRIMARY KEY  (`id_bas`)
+			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+			</requete>
+			<requete>
+			CREATE TABLE IF NOT EXISTS `bas_salles` (
+			  `id_salle` varchar(10) NOT NULL default '',
+			  `nom_salle` varchar(50) NOT NULL default '',
+			  `nom_court_salle` varchar(20) NOT NULL default '',
+			  `special` char(1) NOT NULL default '',
+			  `nb_places` smallint(6) NOT NULL default '0',
+			  `materiel` varchar(5) NOT NULL default 'n'
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			</requete>
+			<requete>
+			CREATE TABLE IF NOT EXISTS `bas_utilisateurs` (
+			  `login` varchar(50) NOT NULL default '',
+			  `nb_jury` smallint(6) NOT NULL default '0',
+			  `service` float NOT NULL default '0',
+			  `service_pb` float NOT NULL default '0',
+			  `sous_service` float NOT NULL default '0',
+			  PRIMARY KEY  (`login`)
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+			</requete>
+		</requetes>
 	</installation>
 	<desinstallation>
 		<requetes>
-		<requete>
-DROP TABLE `bas_gestion_acces_scripts`;
-    </requete>
-		<requete>
-DROP TABLE `bas_bas`;
-    </requete>
-    <requete>
-DROP TABLE `bas_eleves_insc_bas`;
-    </requete>
-    <requete>
-DROP TABLE `bas_j_eleves_bas_insc`;
-    </requete>
-		<requete>
-DROP TABLE `bas_classes`;
-    </requete>
-		<requete>
-DROP TABLE `bas_creneaux`;
-    </requete>
-		<requete>
-DROP TABLE `bas_filieres`;
-    </requete>
-		<requete>
-DROP TABLE `bas_imprime_feuilles_presence`;
-    </requete>
-		<requete>
-DROP TABLE `bas_j_eleves_bas`;
-    </requete>
-		<requete>
-DROP TABLE `bas_j_eleves_filieres`;
-    </requete>
-		<requete>
-DROP TABLE `bas_j_matieres_profs`;
-    </requete>
-		<requete>
-DROP TABLE `bas_j_professeurs_absences`;
-    </requete>
-		<requete>
-DROP TABLE `bas_matieres`;
-    </requete>
-		<requete>
-DROP TABLE `bas_propositions`;
-    </requete>
-		<requete>
-DROP TABLE `bas_salles`;
-    </requete>
-		<requete>
-DROP TABLE `bas_utilisateurs`;
-    </requete>
+			<requete>
+			DROP TABLE `bas_gestion_acces_scripts`;
+			</requete>
+			<requete>
+			DROP TABLE `bas_bas`;
+			</requete>
+			<requete>
+			DROP TABLE `bas_eleves_insc_bas`;
+			</requete>
+			<requete>
+			DROP TABLE `bas_classes`;
+			</requete>
+			<requete>
+			DROP TABLE `bas_creneaux`;
+			</requete>
+			<requete>
+			DROP TABLE `bas_j_eleves_bas`;
+			</requete>
+			<requete>
+			DROP TABLE `bas_j_eleves_bas_insc`;
+			</requete>
+			<requete>
+			DROP TABLE `bas_filieres`;
+			</requete>
+			<requete>
+			DROP TABLE `bas_j_eleves_filieres`;
+			</requete>
+			<requete>
+			DROP TABLE `bas_imprime_feuilles_presence`;
+			</requete>
+			<requete>
+			DROP TABLE `bas_j_matieres_profs`;
+			</requete>
+			<requete>
+			DROP TABLE `bas_j_professeurs_absences`;
+			</requete>
+			<requete>
+			DROP TABLE `bas_matieres`;
+			</requete>
+			<requete>
+			DROP TABLE `bas_propositions`;
+			</requete>
+			<requete>
+			DROP TABLE `bas_salles`;
+			</requete>
+			<requete>
+			DROP TABLE `bas_utilisateurs`;
+			</requete>
 		</requetes>
 	</desinstallation>
 	<administration>
-			<fichier>
-				<nomfichier autorisation="A-P-C">admin_acces_scripts.php</nomfichier>
-				<nomfichier autorisation="A-P-C">index.php</nomfichier>
-				<nomfichier autorisation="A-P-C">admin_index.php</nomfichier>
-      	<nomfichier autorisation="A-P">admin_bas.php</nomfichier>
-      	<nomfichier autorisation="A-P-C">admin_bases.php</nomfichier>
-      	<nomfichier autorisation="A-P">admin_bas_affectations.php</nomfichier>
-      	<nomfichier autorisation="A-P">admin_bas_config.php</nomfichier>
-      	<nomfichier autorisation="A-P-C">admin_bas_salles.php</nomfichier>
-      	<nomfichier autorisation="A-P-C">admin_inscrip_rapide.php</nomfichier>
-      	<nomfichier autorisation="A-P">admin_matiere_index.php</nomfichier>
-      	<nomfichier autorisation="A-P">admin_matiere_modify.php</nomfichier>
-      	<nomfichier autorisation="A-P">admin_modif_choix1.php</nomfichier>
-      	<nomfichier autorisation="A-P">admin_prof_suivi.php</nomfichier>
-      	<nomfichier autorisation="A-P">admin_salles_index.php</nomfichier>
-      	<nomfichier autorisation="A-P">admin_salles_modify.php</nomfichier>
-      	<nomfichier autorisation="A-P">admin_stats.php</nomfichier>
-      	<nomfichier autorisation="A">admin_stats2.php</nomfichier>
-      	<nomfichier autorisation="A-P">admin_tab_profs_matieres.php</nomfichier>
-      	<nomfichier autorisation="A-P-C">admin_toutes_feuilles_presence.php</nomfichier>
-      	<nomfichier autorisation="A-P-C">admin_toutes_feuilles_presence2.php</nomfichier>
-      	<nomfichier autorisation="A-P">admin_user_bas_absences.php</nomfichier>
-      	<nomfichier autorisation="A-P">admin_user_index.php</nomfichier>
-      	<nomfichier autorisation="A-P">admin_user_modify.php</nomfichier>
-      	<nomfichier autorisation="A-P-C">bas_par_classes.php</nomfichier>
-      	<nomfichier autorisation="A-P-C">index_listes.php</nomfichier>
-      	<nomfichier autorisation="A-P">index_suivi.php</nomfichier>
-      	<nomfichier autorisation="A-E">index_eleve.php</nomfichier>
-      	<nomfichier autorisation="A-P-C">index_inscrits.php</nomfichier>
-      	<nomfichier autorisation="A-P-C">inscrire_eleves_par_atelier.php</nomfichier>
-      	<nomfichier autorisation="A-P-C">modify_bas.php</nomfichier>
-      	<nomfichier autorisation="A-P-C">stats_bas.php</nomfichier>
-      	<nomfichier autorisation="P">liste_bas_par_eleve.php</nomfichier>
-      	<nomfichier autorisation="A-P-C">droit_special_inscrip_rapide.txt</nomfichier>
-      	<nomfichier autorisation="A-P-C">droit_special_modify_bas.txt</nomfichier>
-      	<nomfichier autorisation="A-P-C">droit_special_index.txt</nomfichier>
-      	<nomfichier autorisation="A-P-C">droit_special_index_suivi.txt</nomfichier>
+		<fichier>
+			<nomfichier autorisation="A-P-C">admin_acces_scripts.php</nomfichier>
+			<nomfichier autorisation="A-P-C">index.php</nomfichier>
+			<nomfichier autorisation="A-P-C">admin_index.php</nomfichier>
+			<nomfichier autorisation="A-P">admin_bas.php</nomfichier>
+			<nomfichier autorisation="A-P-C">admin_bases.php</nomfichier>
+			<nomfichier autorisation="A-P">admin_bas_affectations.php</nomfichier>
+			<nomfichier autorisation="A-P">admin_bas_config.php</nomfichier>
+			<nomfichier autorisation="A-P-C">admin_bas_salles.php</nomfichier>
+			<nomfichier autorisation="A-P-C">admin_inscrip_rapide.php</nomfichier>
+			<nomfichier autorisation="A-P">admin_matiere_index.php</nomfichier>
+			<nomfichier autorisation="A-P">admin_matiere_modify.php</nomfichier>
+			<nomfichier autorisation="A-P">admin_modif_choix1.php</nomfichier>
+			<nomfichier autorisation="A-P">admin_prof_suivi.php</nomfichier>
+			<nomfichier autorisation="A-P">admin_salles_index.php</nomfichier>
+			<nomfichier autorisation="A-P">admin_salles_modify.php</nomfichier>
+			<nomfichier autorisation="A-P">admin_stats.php</nomfichier>
+			<nomfichier autorisation="A">admin_stats2.php</nomfichier>
+			<nomfichier autorisation="A-P">admin_tab_profs_matieres.php</nomfichier>
+			<nomfichier autorisation="A-P-C">admin_toutes_feuilles_presence.php</nomfichier>
+			<nomfichier autorisation="A-P-C">admin_toutes_feuilles_presence2.php</nomfichier>
+			<nomfichier autorisation="A-P">admin_user_bas_absences.php</nomfichier>
+			<nomfichier autorisation="A-P">admin_user_index.php</nomfichier>
+			<nomfichier autorisation="A-P">admin_user_modify.php</nomfichier>
+			<nomfichier autorisation="A-P-C">bas_par_classes.php</nomfichier>
+			<nomfichier autorisation="A-P-C">index_listes.php</nomfichier>
+			<nomfichier autorisation="A-P">index_suivi.php</nomfichier>
+			<nomfichier autorisation="A-E">index_eleve.php</nomfichier>
+			<nomfichier autorisation="A-P-C">index_inscrits.php</nomfichier>
+			<nomfichier autorisation="A-P-C">inscrire_eleves_par_atelier.php</nomfichier>
+			<nomfichier autorisation="A-P-C">modify_bas.php</nomfichier>
+			<nomfichier autorisation="A-P-C">stats_bas.php</nomfichier>
+			<nomfichier autorisation="P">liste_bas_par_eleve.php</nomfichier>
+			<nomfichier autorisation="A-P-C">droit_special_inscrip_rapide.txt</nomfichier>
+			<nomfichier autorisation="A-P-C">droit_special_modify_bas.txt</nomfichier>
+			<nomfichier autorisation="A-P-C">droit_special_index.txt</nomfichier>
+			<nomfichier autorisation="A-P-C">droit_special_index_suivi.txt</nomfichier>
 			</fichier>
 		<menu>
-      <item autorisation="A" titre="9. Gestion des autorisations" description="Gestion des autorisations d'accès aux différentes fonctionnalités du module">admin_acces_scripts.php</item>
+			<item autorisation="A" titre="9. Gestion des autorisations" description="Gestion des autorisations d'accès aux différentes fonctionnalités du module">admin_acces_scripts.php</item>
 			<item autorisation="A-P-C" titre="1. Accès au module atelier" description="Saisie et visualisation des propositions d'ateliers">index.php</item>
 			<item autorisation="A-P-C" titre="4. Gestion des ateliers (Administratreur)" description="Accès administrateur pour l'affectation des salles aux ateliers et la répartition des ateliers sur les créneaux horaires">admin_index.php</item>
 			<item autorisation="A-P-C" titre="5. Configuration générale des ateliers" description="Configuration des ateliers : dates, vérouillage/dévérouillage des différentes phases, configuration des matières, Configuration des professeurs, Paramètres généraux.">admin_bases.php</item>
 			<item autorisation="P" titre="2. Groupe de suivi" description="Gestion des ateliers pour mon groupe de suivi">index_suivi.php</item>
 			<item autorisation="E" titre="1. Ateliers" description="Mes choix d'atelier.">index_eleve.php</item>
-  	</menu>
+		</menu>
 	</administration>
 </gepinstall>
