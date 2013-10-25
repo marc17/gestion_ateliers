@@ -178,7 +178,7 @@ if ($total_moyen_bas_effectues < 0) $total_moyen_bas_effectues = 0;
 
 //**************** EN-TETE *****************************
 $titre_page = "Informations personnelles et détails des propositions BAS de ".$user_nom." ".$user_prenom;
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *****************
 
 if (isset($_GET['admin']))

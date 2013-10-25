@@ -94,7 +94,7 @@ if (isset($_POST['isposted'])) {
 }
 //**************** EN-TETE *******************************
 $titre_page = "Gestion des matières | Modifier une matière";
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE ****************************
 ?>
 <form enctype="multipart/form-data" action="admin_matiere_modify.php" method=post>

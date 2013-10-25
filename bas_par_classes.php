@@ -57,7 +57,7 @@ $numero_bas = isset($_POST['numero_bas']) ? $_POST['numero_bas'] : (isset($_GET[
 
 //**************** EN-TETE *****************
 //$titre_page = "Gestion des Ateliers";
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *************
 
 if (isset($numero_bas)) {

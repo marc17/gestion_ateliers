@@ -120,7 +120,7 @@ function affiche_ligne($chemin_,$titre_,$expli_) {
 
 //**************** EN-TETE *****************
 $titre_page = "Accueil - Administration des bases des ".$NomAtelier_pluriel;
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *************
 
 

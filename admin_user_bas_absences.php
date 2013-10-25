@@ -73,7 +73,7 @@ if (isset($_POST["is_posted"])) {
 
 //**************** EN-TETE *****************************
 $titre_page = "Gestion des absences par atelier";
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *****************
 
 

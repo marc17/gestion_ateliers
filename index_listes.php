@@ -58,7 +58,7 @@ $en_tete = isset($_POST['en_tete']) ? $_POST['en_tete'] : (isset($_GET['en_tete'
 
 //**************** EN-TETE *****************
 if (!isset($en_tete)) $titre_page = ucfirst($NomAtelier_singulier)." - Listes des propositions";
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *************
 
 // Choix de la filiere

@@ -453,7 +453,7 @@ else
     $titre_page = "Gestion des ".$NomAtelier_pluriel."<br />Ajouter/Modifier une activité";
 
 
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *****************
 
 // Choix de la matière

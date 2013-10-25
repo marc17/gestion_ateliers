@@ -74,7 +74,7 @@ $themessage = "Etes-vous sûr de vouloir supprimer cette proposition ?";
 
 //**************** EN-TETE *****************
 $titre_page = "Gestion des ".$NomAtelier_pluriel;
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *************
 
 // choix du bas

@@ -133,7 +133,7 @@ if (isset($_GET['is_posted'])  and ($_SESSION['action_ges']=='verif_salle')) {
 
 //**************** EN-TETE *****************
 $titre_page = "Gestion des ".$NomAtelier_pluriel;
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *************
 
 // choix du bas

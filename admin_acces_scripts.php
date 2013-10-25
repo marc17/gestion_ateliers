@@ -113,7 +113,7 @@ if (!loadSettings()) {
 
 //**************** EN-TETE *****************
 $titre_page = "Gestion des ateliers - Configuration des autorisations d'accès aux scripts";
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *****************
 
 echo "<p class=\"bold\">|<a href='../../accueil.php'>Retour</a>|</p>\n";

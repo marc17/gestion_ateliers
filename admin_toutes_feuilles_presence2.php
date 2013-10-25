@@ -57,7 +57,7 @@ $id_bas = isset($_POST['id_bas']) ? $_POST['id_bas'] : (isset($_GET['id_bas']) ?
 
 
 //**************** EN-TETE *****************
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *************
 
 // Si le numério n'est pas défini, on arrete tout

@@ -90,7 +90,7 @@ if (isset($_POST['is_posted'])) {
 
 //**************** EN-TETE *****************
 $titre_page = "Modification des choix 1";
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *************
 echo "<p class=bold>| <a href=\"../../accueil.php\">Retour page d'accueil</a>|";
 echo "<a href=\"./admin_bas_affectations.php?numero_bas=$numero_bas\">Retour Harmonisation effectifs</a>|";

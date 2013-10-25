@@ -269,7 +269,7 @@ if (isset($action) and ($action=="inscription") and (isset($_POST['is_posted']))
 
 //**************** EN-TETE *****************
 $titre_page = "Inscription rapide des élèves";
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *****************
 echo "<p class=bold>| <a href=\"../../accueil.php\">Retour à la page d'accueil</a> |";
 if (calcul_autorisation_gestion_ateliers($_SESSION['login'],"mod_plugins/gestion_ateliers/droit_special_inscrip_rapide.txt"))

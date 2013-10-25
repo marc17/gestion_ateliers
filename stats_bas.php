@@ -53,7 +53,7 @@ if (!calcul_autorisation_gestion_ateliers($_SESSION['login'],$nom_script)){
 
 
 //**************** EN-TETE *****************
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *************
 // Constitution du tableau $per
 $per =  tableau_periode($_GET['numero_bas']);

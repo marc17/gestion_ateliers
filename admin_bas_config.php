@@ -198,7 +198,7 @@ if (isset($_POST['is_posted2'])) {
 
 //**************** EN-TETE *****************
 $titre_page = "Configuration des ".$NomAtelier_pluriel;
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *************
 
 echo "<p class=bold>| <a href=\"../../accueil.php\">Retour à la page d'accueil</a>

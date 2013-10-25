@@ -517,7 +517,7 @@ if (isset($action) and ($action=="inscription") and (isset($_POST['is_posted']))
 
 //**************** EN-TETE *****************
 if (!isset($numero_bas) or (isset($action))) $titre_page = "Gestion de mes activités BAS";
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *****************
 
 

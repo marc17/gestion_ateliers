@@ -95,7 +95,7 @@ if (isset($_POST['valider'])) {
 
 //**************** EN-TETE *****************
 $titre_page = "Inscription des élèves par atelier";
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *************
 
 

@@ -57,7 +57,7 @@ $numero_bas = isset($_POST['numero_bas']) ? $_POST['numero_bas'] : (isset($_GET[
 
 //**************** EN-TETE *****************
 $titre_page = "Gestion des ".$NomAtelier_pluriel;
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *************
 
 echo "<p class=bold>| <a href=\"../../accueil.php\">Retour à la page d'accueil</a> |<a href=\"./admin_index.php\"> Menu de gestion des ".$NomAtelier_pluriel."</a> |";

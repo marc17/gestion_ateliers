@@ -52,7 +52,7 @@ if (!calcul_autorisation_gestion_ateliers($_SESSION['login'],$nom_script)){
 }
 
 //**************** EN-TETE *****************
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *************
 echo affiche_props_bas_par_eleve($_GET['current_eleve_login']);
 ?>

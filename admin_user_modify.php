@@ -164,7 +164,7 @@ if (isset($user_login) and ($user_login!='')) {
 
 //**************** EN-TETE *****************
 $titre_page = "Gestion des utilisateurs  \"Ateliers\" | Modifier un utilisateur";
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *****************
 ?>
 <p class=bold>

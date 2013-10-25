@@ -66,7 +66,7 @@ if (isset($_GET['action']) and ($_GET['action']=="supprimer")) {
 
 //**************** EN-TETE *****************
 $titre_page = "Gestion des matières";
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *****************
 ?>
 

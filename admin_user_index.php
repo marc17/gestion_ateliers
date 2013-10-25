@@ -68,7 +68,7 @@ if (isset($_GET['action']) and ($_GET['action']=="del_utilisateur")) {
 
 //**************** EN-TETE *****************************
 $titre_page = "Gestion des utilisateurs";
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *****************
 unset($display);
 $display = isset($_POST["display"]) ? $_POST["display"] : (isset($_GET["display"]) ? $_GET["display"] : (getSettingValue("lpi_display_users")!='' ? getSettingValue("lpi_display_users"): 'tous'));

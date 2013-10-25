@@ -544,7 +544,7 @@ if (isset($action) and ($action=="inscription_filiere") and (isset($_POST['is_po
 
 //**************** EN-TETE *****************
 if (!isset($numero_bas) or (isset($action) and ($action != 'edit_feuille'))) $titre_page = "Gestion des activités pour mon groupe de suivi";
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *****************
 
 // On teste si le l'utilisateur est prof de suivi.

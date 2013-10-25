@@ -62,7 +62,7 @@ if ($orderby =="par_bas") $numero_bas = -1;
 
 //**************** EN-TETE *****************
 $titre_page = "Statistiques";
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *************
     echo "<p class=bold>| <a href=\"../../accueil.php\">Retour à la page d'accueil</a> |<a href=\"./admin_index.php\"> Accueil Module Atelier</a> |\n";
 if ($orderby !="par_bas") {

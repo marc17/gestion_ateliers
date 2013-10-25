@@ -57,7 +57,7 @@ $numero_bas = isset($_POST['numero_bas']) ? $_POST['numero_bas'] : (isset($_GET[
 $id_bas = isset($_POST['id_bas']) ? $_POST['id_bas'] : (isset($_GET['id_bas']) ? $_GET['id_bas'] : NULL);
 
 //**************** EN-TETE *****************
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *************
 
 // Si le numéro n'est pas défini, on arrete tout

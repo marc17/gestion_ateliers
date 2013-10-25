@@ -253,7 +253,7 @@ if ((isset($numero_bas)) and (isset($action)) and ($action=="affect_choix2")) {
 
 //**************** EN-TETE *****************
 $titre_page = "Gestion des ateliers - Harmonisation des effectifs";
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *************
 
 // Si le numério du n'est pas défini, on arrete tout

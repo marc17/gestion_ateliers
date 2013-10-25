@@ -62,7 +62,7 @@ $_SESSION['action_ges'] = isset($_POST['action_ges']) ? $_POST['action_ges'] : (
 
 //**************** EN-TETE *****************
 $titre_page = "Gestion des ".$NomAtelier_pluriel;
-require_once("../../lib/header.inc");
+require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *************
 
 // choix du bas
