@@ -40,6 +40,8 @@ $_login : l'identifiant de l'utilisateur
 $_lien_item : le nom du script vers lequel pointe le menu. Du type mod_plugins/nom_du_plugin/nom_du_fichier.php
 */
 function calcul_autorisation_gestion_ateliers($_login,$_lien_item){
+	// Pour compatibilté avec l'affichage des plugins dans la barre de menu
+	if (basename($_lien_item)==$_lien_item) $_lien_item="mod_plugins/gestion_ateliers/".$_lien_item;
   // Cas particulier de index_suivi.php
   if ($_lien_item=="mod_plugins/gestion_ateliers/index_suivi.php") {
     // On teste si le l'utilisateur est prof de suivi.
