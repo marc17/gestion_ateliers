@@ -1,0 +1,23 @@
+******************************************
+* Prise en main rapide du plugin Atelier *
+******************************************
+
+0) Modifier éventuellement le fichier config.inc.php
+1) Installer les scripts dans le dossier mod_plugins, dans un dossier "gestion_ateliers"
+2) Installer et activer le plugin dans GEPI 
+
+----------
+3) Menu principal -> Configuration générale des ateliers :
+- Définir les classes concernées par les ateliers
+- Configuration des salles BAS
+
+
+4) Menu principal -> Configuration générale des ateliers -> Configuration des professeurs -> Affecter les matières aux professeurs
+Pour proposer des ateliers, un professeur doit d'abord être affecté à une ou plusieurs matières dans laquelle il pourra alors proposer des activités.
+Les matières sont elle-même configurables
+
+5) Menu principal -> Configuration générale des ateliers -> Configuration des ateliers
+Ajouter un ou plusieurs ateliers
+
+etc...
+ 
