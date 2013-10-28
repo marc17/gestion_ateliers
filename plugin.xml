@@ -419,12 +419,12 @@
 			<nomfichier autorisation="A-P-C">droit_special_index_suivi.txt</nomfichier>
 			</fichier>
 		<menu>
-			<item autorisation="A" titre="9. Gestion des autorisations" description="Gestion des autorisations d'accès aux différentes fonctionnalités du module">admin_acces_scripts.php</item>
-			<item autorisation="A-P-C" titre="1. Accès au module atelier" description="Saisie et visualisation des propositions d'ateliers">index.php</item>
-			<item autorisation="A-P-C" titre="4. Gestion des ateliers (Administratreur)" description="Accès administrateur pour l'affectation des salles aux ateliers et la répartition des ateliers sur les créneaux horaires">admin_index.php</item>
-			<item autorisation="A-P-C" titre="5. Configuration générale des ateliers" description="Configuration des ateliers : dates, vérouillage/dévérouillage des différentes phases, configuration des matières, Configuration des professeurs, Paramètres généraux.">admin_bases.php</item>
-			<item autorisation="P" titre="2. Groupe de suivi" description="Gestion des ateliers pour mon groupe de suivi">index_suivi.php</item>
-			<item autorisation="E" titre="1. Ateliers" description="Mes choix d'atelier.">index_eleve.php</item>
+			<item autorisation="A" titre="Gestion des autorisations" description="Gestion des autorisations d'accès aux fonctionnalités du module">admin_acces_scripts.php</item>
+			<item autorisation="A-P-C" titre="Accès au module atelier" description="Saisie et visualisation des propositions d'ateliers">index.php</item>
+			<item autorisation="A-P-C" titre="Gestion des ateliers" description="Accès administrateur pour l'affectation des salles aux ateliers et la répartition des ateliers sur les créneaux horaires">admin_index.php</item>
+			<item autorisation="A-P-C" titre="Configuration générale des ateliers" description="Configuration des ateliers : dates, vérouillage/dévérouillage des différentes phases, configuration des matières, Configuration des professeurs, Paramètres généraux.">admin_bases.php</item>
+			<item autorisation="P" titre="Groupe de suivi" description="Gestion des ateliers pour mon groupe de suivi">index_suivi.php</item>
+			<item autorisation="E" titre="Ateliers" description="Mes choix d'atelier.">index_eleve.php</item>
 		</menu>
 	</administration>
 </gepinstall>
