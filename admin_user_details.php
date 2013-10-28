@@ -55,7 +55,7 @@ if (!isset($_GET['user_login'])) {
    $_GET['user_login'] = $_SESSION['login'];
 } else if (mb_strtolower($_GET['user_login']) != mb_strtolower($_SESSION['login'])) {
   // On vérifie que l'utilisateur peut accéder à d'autres fiches que la sienne
-  $test = sql_query1("select count(content) from  bas_gestion_acces_scripts where content='".$_SESSION['login']."' and nom_champ ='".$nom_script."'");
+  $test = sql_query1("select count(acces) from  bas_gestion_acces_scripts where acces='".$_SESSION['login']."' and script ='".$nom_script."'");
   if ($test < 1) {
     header("Location: ../../logout.php?auto=1");
     die();

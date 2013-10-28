@@ -40,31 +40,31 @@ $_login : l'identifiant de l'utilisateur
 $_lien_item : le nom du script vers lequel pointe le menu. Du type mod_plugins/nom_du_plugin/nom_du_fichier.php
 */
 function calcul_autorisation_gestion_ateliers($_login,$_lien_item){
-	// Pour compatibilté avec l'affichage des plugins dans la barre de menu
-	if (basename($_lien_item)==$_lien_item) $_lien_item="mod_plugins/gestion_ateliers/".$_lien_item;
+	// Si l'appel se fait depuis les scripts générant la page d'accueil il faut supprimer le chemin
+	$_lien_item=basename($_lien_item);
   // Cas particulier de index_suivi.php
-  if ($_lien_item=="mod_plugins/gestion_ateliers/index_suivi.php") {
+  if ($_lien_item=="index_suivi.php") {
     // On teste si le l'utilisateur est prof de suivi.
     $test_prof_suivi = sql_count(sql_query("SELECT professeur FROM j_eleves_professeurs  WHERE professeur = '".$_login."'"));
-    if (($test_prof_suivi == "0") and !(calcul_autorisation_gestion_ateliers($_login,"mod_plugins/gestion_ateliers/droit_special_index_suivi.txt")))
+    if (($test_prof_suivi == "0") and !(calcul_autorisation_gestion_ateliers($_login,"droit_special_index_suivi.txt")))
         return FALSE;
   }
-  $test1 = sql_query1("SELECT count(nom_champ) FROM bas_gestion_acces_scripts WHERE (content = '_tous_' and nom_champ = '".$_lien_item."')");
+  $test1 = sql_query1("SELECT count(script) FROM bas_gestion_acces_scripts WHERE (acces = '_tous_' and script = '".$_lien_item."')");
   if ($test1 == 1) {
     $_statut = sql_query1("select statut from utilisateurs where login='".$_login."'");
-    $test2 = sql_query1("SELECT count(user_statut) FROM plugins_autorisations WHERE (user_statut  = '".$_statut."' and  fichier = '".$_lien_item."')");
+    $test2 = sql_query1("SELECT count(user_statut) FROM plugins_autorisations WHERE (user_statut  = '".$_statut."' and  fichier = 'mod_plugins/gestion_ateliers/".$_lien_item."')");
     if ($test2 == 1)
       return TRUE;
     else
       return FALSE;
   } else {
-    $call_prof_resp = mysql_query("SELECT * FROM bas_gestion_acces_scripts WHERE (content = '" . $_login . "' and nom_champ = '".$_lien_item."')");
+    $call_prof_resp = mysql_query("SELECT * FROM bas_gestion_acces_scripts WHERE (acces = '" . $_login . "' and script = '".$_lien_item."')");
     $nb_result = mysql_num_rows($call_prof_resp);
     if ($nb_result != 0)
       return TRUE;
     else {
       $_statut = sql_query1("select statut from utilisateurs where login='".$_login."'");
-      $test = sql_query1("select count(nom_champ) from bas_gestion_acces_scripts  where nom_champ='".$_lien_item."' and content='_".$_statut."_'");
+      $test = sql_query1("select count(script) from bas_gestion_acces_scripts  where script='".$_lien_item."' and acces='_".$_statut."_'");
       if ($test == 1)
         return TRUE;
       else

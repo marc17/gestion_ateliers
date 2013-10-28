@@ -64,20 +64,20 @@ $nom_fichier = isset($_POST["nom_fichier"]) ? $_POST["nom_fichier"] : (isset($_G
 $msg = '';
 
 if (isset($_GET['action']) and ($_GET['action'] == "del_prof")) {
-    $delete_membre = mysql_query("DELETE FROM bas_gestion_acces_scripts WHERE (nom_champ='".$nom_fichier."' and content='".$login_prof."')");
+    $delete_membre = mysql_query("DELETE FROM bas_gestion_acces_scripts WHERE (script='".$nom_fichier."' and acces='".$login_prof."')");
     if (!$delete_membre) { $msg = "Erreur lors de la suppression de l'utilisateur"; } else { $msg = "L'utilisateur a bien été supprimé de la liste."; }
 }
 if (isset($_POST['add_prof']) and ($_POST['add_prof'] == "yes") and ($reg_prof_login != '')) {
     if ($reg_prof_login=='_tous_') {
       // On efface tous les membres
-      $delete_membre = mysql_query("DELETE FROM bas_gestion_acces_scripts WHERE (nom_champ='".$nom_fichier."')");
+      $delete_membre = mysql_query("DELETE FROM bas_gestion_acces_scripts WHERE (script='".$nom_fichier."')");
       // On insère l'enregistrement
-      $reg_data = mysql_query("INSERT INTO bas_gestion_acces_scripts SET content='_tous_', nom_champ='".$nom_fichier."'");
+      $reg_data = mysql_query("INSERT INTO bas_gestion_acces_scripts SET acces='_tous_', script='".$nom_fichier."'");
       if (!$reg_data) { $msg = "Erreur lors de l'ajout de l'item ".$reg_prof_login." !"; } else { $msg = "A présent, tous les utilisateurs de la liste ont accès au script !"; }
 
     } else {
       // On efface
-      $delete_membre = mysql_query("DELETE FROM bas_gestion_acces_scripts WHERE (nom_champ='".$nom_fichier."' and content='_tous_')");
+      $delete_membre = mysql_query("DELETE FROM bas_gestion_acces_scripts WHERE (script='".$nom_fichier."' and acces='_tous_')");
       // On initialise $flag_stop
       $flag_stop = "n";
       $sql_statut = "select distinct user_statut from plugins_autorisations where fichier='".$nom_fichier."'";
@@ -85,7 +85,7 @@ if (isset($_POST['add_prof']) and ($_POST['add_prof'] == "yes") and ($reg_prof_l
       if(mysql_num_rows($res_statut)>0) {
           while($row_statut=mysql_fetch_object($res_statut)) {
             if ($reg_prof_login=="_".$row_statut->user_statut."_") {
-              $reg_data = mysql_query("INSERT INTO bas_gestion_acces_scripts SET content='".$reg_prof_login."', nom_champ='".$nom_fichier."'");
+              $reg_data = mysql_query("INSERT INTO bas_gestion_acces_scripts SET acces='".$reg_prof_login."', script='".$nom_fichier."'");
               if (!$reg_data) { $msg = "Erreur lors de l'ajout de l'item ".$reg_prof_login." !"; } else { $msg = "A présent, tous les utilisateurs ayant le statut ".$row_statut->user_statut." ont accès au script !"; }
               $flag_stop = "y";
             }
@@ -93,12 +93,12 @@ if (isset($_POST['add_prof']) and ($_POST['add_prof'] == "yes") and ($reg_prof_l
       }
       if ($flag_stop == "n") {
         // On commence par vérifier que le professeur n'est pas déjà présent dans cette liste.
-        $test = mysql_query("SELECT * FROM bas_gestion_acces_scripts WHERE (nom_champ='".$nom_fichier."' and content='".$reg_prof_login."')");
+        $test = mysql_query("SELECT * FROM bas_gestion_acces_scripts WHERE (script='".$nom_fichier."' and acces='".$reg_prof_login."')");
         $test2 = mysql_num_rows($test);
         if ($test2 != "0") {
           $msg = "L'utilisateur que vous avez tenté d'ajouter appartient déjà à la liste.";
         } else {
-          $reg_data = mysql_query("INSERT INTO bas_gestion_acces_scripts SET content='".$reg_prof_login."', nom_champ='".$nom_fichier."'");
+          $reg_data = mysql_query("INSERT INTO bas_gestion_acces_scripts SET acces='".$reg_prof_login."', script='".$nom_fichier."'");
           if (!$reg_data) { $msg = "Erreur lors de l'ajout de l'utilisateur ".$reg_prof_login." !"; } else { $msg = "L'utilisateur a bien été ajouté !"; }
         }
       }
@@ -136,7 +136,7 @@ if(mysql_num_rows($res)>0) {
     if ($description != -1) echo "(Module : <b>".$description."</b>)";
     echo "</h2>\n";
     echo "<p><span class='bold'>Liste des utilisateurs ayant accès à ce script :</span>\n";
-    $test = sql_query1("SELECT count(nom_champ) FROM bas_gestion_acces_scripts WHERE (content = '_tous_' and nom_champ = '".$nom_fichier."')");
+    $test = sql_query1("SELECT count(script) FROM bas_gestion_acces_scripts WHERE (acces = '_tous_' and script = '".$nom_fichier."')");
     if ($test == 1) {
         echo "<br /><font size=+1><span style=\"color:red;\">Actuellement, tous les utilisateurs de la liste ci-dessous ont accès à ce script !</span> - <a href='admin_acces_scripts.php?action=del_prof&amp;login_prof=_tous_&amp;nom_fichier=$nom_fichier'>supprimer</a></font>\n";
         $sql_statut = "select distinct user_statut from plugins_autorisations where fichier='".$nom_fichier."'";
@@ -154,7 +154,7 @@ if(mysql_num_rows($res)>0) {
       $res_statut = mysql_query($sql_statut);
       if(mysql_num_rows($res_statut)>0) {
           while($row_statut=mysql_fetch_object($res_statut)) {
-            $test2 = sql_query1("SELECT count(nom_champ) FROM bas_gestion_acces_scripts WHERE (content = '_".$row_statut->user_statut."_' and nom_champ = '".$nom_fichier."')");
+            $test2 = sql_query1("SELECT count(script) FROM bas_gestion_acces_scripts WHERE (acces = '_".$row_statut->user_statut."_' and script = '".$nom_fichier."')");
             if ($test2 == 1) {
               echo "<br /><font size=+1><span style=\"color:red;\">Actuellement, tous les utilisateurs de la liste ayant le statut ".$row_statut->user_statut." ont accès à ce script !</span> - <a href='admin_acces_scripts.php?action=del_prof&amp;login_prof=_".$row_statut->user_statut."_&amp;nom_fichier=$nom_fichier'>supprimer</a></font>\n";
               $vide = 0;
@@ -163,7 +163,7 @@ if(mysql_num_rows($res)>0) {
       }
 
       $call_liste_data = mysql_query("SELECT distinct u.* FROM utilisateurs u, bas_gestion_acces_scripts p
-      WHERE ( p.nom_champ='".$nom_fichier."' and u.login=p.content ) order by u.nom, u.prenom");
+      WHERE ( p.script='".$nom_fichier."' and u.login=p.acces ) order by u.nom, u.prenom");
       $nombre = mysql_num_rows($call_liste_data);
       $i = "0";
       while ($i < $nombre) {
