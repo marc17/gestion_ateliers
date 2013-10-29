@@ -1,8 +1,8 @@
 <?php
 /*
- * Last modification  : 14 mai 2010
+ * Last modification  : 29 octobre 2013
  *
- * Copyright 2010 Laurent Delineau
+ * Copyright 2010 Laurent Delineau, 2013 Marc Leygnac, Eric Lebrun
  *
  * This file is part of "gestion_ateliers" a plugin of GEPI.
  * It's a free software; you can redistribute it and/or modify
@@ -82,11 +82,19 @@ if (!(isset($numero_bas))) {
     echo "<p class=bold>| <a href=\"../../accueil.php\">Retour à la page d'accueil</a> |";
 //    echo "<a href='admin_stats.php'>Statistiques</a> |";
     echo "</p>";
-
-    echo "<p class='grand'>Choisissez la séance : </p>";
+    
     $req = mysql_query("select * from bas_bas order by nom");
     $nb_bas = mysql_num_rows($req);
     $i = 0 ;
+
+// signaler l'absence de BAS
+    if ($nb_bas == 0) {
+        echo "<br />Il semble qu'aucun ".$NomAtelier_singulier." ne soit encore défini...";
+    } else {
+        echo "<p class='grand'>Choisissez la séance : </p>";
+    }
+//  il est probable que la sortie du test soit à améliorer : sortir directement et proprement du script
+
     echo "<table border=\"1\">";
     while ($i < $nb_bas) {
         $num_periode = mysql_result($req,$i,'num_periode');
