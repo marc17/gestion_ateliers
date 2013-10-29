@@ -1,8 +1,8 @@
 <?php
 /*
- * Last modification  : 14 mai 2010
+ * Last modification  : 29 octobre 2013
  *
- * Copyright 2010 Laurent Delineau
+ * Copyright 2010 Laurent Delineau, 2013 Marc Leygnac, Eric Lebrun
  *
  * This file is part of "gestion_ateliers" a plugin of GEPI.
  * It's a free software; you can redistribute it and/or modify
@@ -119,7 +119,7 @@ function affiche_ligne($chemin_,$titre_,$expli_) {
 
 
 //**************** EN-TETE *****************
-$titre_page = "Accueil - Administration des bases des ".$NomAtelier_pluriel;
+$titre_page = "Accueil - Administration des ".$NomAtelier_pluriel;
 require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *************
 
@@ -133,14 +133,14 @@ $lien[]="mod_plugins/gestion_ateliers/admin_user_index.php";
 $lien[]="mod_plugins/gestion_ateliers/admin_salles_index.php";
 if ($is_LP2I) $lien[]="mod_plugins/gestion_ateliers/admin_stats2.php";
 
-$_titre["mod_plugins/gestion_ateliers/admin_bas_config.php"] = "Configuration des ".$NomAtelier_pluriel;
+$_titre["mod_plugins/gestion_ateliers/admin_bas_config.php"] = "Configuration générale&nbsp;:";
 $_titre["mod_plugins/gestion_ateliers/admin_matiere_index.php"]= "Configuration des matières \"".$NomAtelier_pluriel."\"";
 $_titre["mod_plugins/gestion_ateliers/admin_user_index.php"] = "Configuration des professeurs";
 $_titre["mod_plugins/gestion_ateliers/admin_salles_index.php"] = "Configuration des salles \"".$NomAtelier_pluriel."\"";
 if ($is_LP2I) $_titre["mod_plugins/gestion_ateliers/admin_stats2.php"] = "Statistiques";
 
 
-$_expli["mod_plugins/gestion_ateliers/admin_bas_config.php"] = "Accès administrateur pour la configuration des ".$NomAtelier_pluriel." : dates, vérouillage/dévérouillage des différentes phases";
+$_expli["mod_plugins/gestion_ateliers/admin_bas_config.php"] = "dates des ".$NomAtelier_pluriel.", verrouillage/déverrouillage des différentes phases";
 $_expli["mod_plugins/gestion_ateliers/admin_matiere_index.php"] = "Accès administrateur pour la configuration des matières \"".$NomAtelier_pluriel."\"";
 $_expli["mod_plugins/gestion_ateliers/admin_user_index.php"] = "Accès administrateur pour la configuration des professeurs";
 $_expli["mod_plugins/gestion_ateliers/admin_salles_index.php"] = "Accès administrateur pour la configuration des salles \"".$NomAtelier_pluriel."\"";
@@ -165,10 +165,10 @@ $nb_ligne = count($chemin);
 
 if ($affiche=='yes') {
     //echo "<table width=750 border=2 cellspacing=1 bordercolor=#330033 cellpadding=5>";
-   echo "<table width='750' class='bordercolor'>";
+    echo "<table width='80%' class='bordercolor'>";
     echo "<tr>";
     echo "<td width='30%'>&nbsp;</td>";
-    echo "<td><b>Administration des bases</b></td>";
+    echo "<td><b>Administration des ".$NomAtelier_pluriel."</b></td>";
     echo "</tr>";
     for ($i=0;$i<$nb_ligne;$i++) {
         affiche_ligne($chemin[$i],$titre[$i],$expli[$i]);
@@ -176,7 +176,8 @@ if ($affiche=='yes') {
     echo "</table>";
 }
 
-echo "<br /><form action=\"admin_bases.php\" name=\"form1\" method=\"post\">\n";
+echo "<form action=\"admin_bases.php\" name=\"form1\" method=\"post\">\n";
+echo "</center>";
 if ($is_LP2I) {
   echo "Sélectionner l'AID correspondant aux ACF : ";
   $call_data = mysql_query("SELECT * FROM aid_config ORDER BY order_display1, order_display2, nom");
@@ -232,7 +233,7 @@ if ($is_LP2I) {
 // Ici commence la partie qui concerne les classes
 //
 echo "<hr />";
-echo "<P>Dans cette partie, vous définissez les classes concernées par les ateliers.</p>";
+echo "<p>Définissez ci-dessous les classes concernées par les ".$NomAtelier_pluriel."&nbsp;:</p>";
 $calldata = mysql_query("SELECT DISTINCT c.* FROM classes c, periodes p WHERE p.id_classe = c.id  ORDER BY classe");
 $nombreligne = mysql_num_rows($calldata);
 $i = 0;
@@ -241,7 +242,9 @@ echo "<tr valign='top' align='center'>\n";
 $i = '0';
 echo "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>\n";
 echo "<td align='left'>\n";
-$nb_class_par_colonne = 6;
+// $nb_class_par_colonne = 6;
+// limitation du nombre de colonnes à 4 ou 5
+$nb_class_par_colonne = round($nombreligne/4);
 while($i < $nombreligne){
   $id_classe = mysql_result($calldata,$i,"id");
   $classe = mysql_result($calldata,$i,"classe");
@@ -257,7 +260,7 @@ while($i < $nombreligne){
      echo "checked = \"checked\" ";
    }
   echo " />";
-  echo "Classe : $classe</label><br />\n";
+  echo "$classe</label><br />\n";
   $i++;
 }
 echo "</td>\n";
@@ -269,10 +272,9 @@ echo "</table>\n";
 
 
 echo "<input type=\"hidden\" name=\"is_posted\" value=\"yes\" />";
-echo "<input type=\"submit\" name=\"Envoyer\" value=\"Envoyer\" />";
+echo "<center><input type=\"submit\" name=\"Envoyer\" value=\"Envoyer\" /></center>";
 echo "</form>\n";
 
 ?>
-</center>
 </body>
 </html>
