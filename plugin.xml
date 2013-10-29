@@ -58,7 +58,7 @@
 			('index_suivi.php', '_tous_'),
 			('inscrire_eleves_par_atelier.php', '_administrateur_'),
 			('inscrire_eleves_par_atelier.php', '_cpe_'),
-			('liste_bas_par_eleve.php', 'professeur'),
+			('liste_bas_par_eleve.php', '_professeur_'),
 			('modify_bas.php', '_tous_'),
 			('stats_bas.php', '_tous_');
 			</requete>
