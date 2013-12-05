@@ -20,17 +20,17 @@ if (isset($_SERVER['PHP_AUTH_PW'])) {
 }
 
 function phpdigAuth(){
-    Header("WWW-Authenticate: Basic realm=\"Cahiers de texte\"");
+    Header("WWW-Authenticate: Basic realm=\"Propositions des ateliers\"");
     Header("HTTP/1.0 401 Unauthorized");
 
     require("secure/connect.inc.php");
     //**************** EN-TETE *****************
-    $titre_page = "Cahiers de texte";
+
     require_once("lib/header.inc.php");
 
     //**************** FIN EN-TETE *****************
     echo "<H3><center>En raison du caractère personnel du contenu, ce site est soumis à des restrictions utilisateurs.
-    <br />Pour accéder aux cahiers de texte, vous devez demander auprès de l'administrateur,
+    <br />Pour accéder aux propositions des ateliers, vous devez demander auprès de l'administrateur,
     <br />le nom d'utilisateur et le mot de passe.</center></H3>";
     echo "</body></html>";
     exit();

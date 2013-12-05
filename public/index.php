@@ -32,7 +32,7 @@ $id_filiere = isset($_POST["id_filiere"]) ? $_POST["id_filiere"] : (isset($_GET[
 
 //**************** EN-TETE *****************
 $titre_page = "Accès aux propositions ".$NomAtelier_preposition.$NomAtelier_pluriel;
-require_once("lib/header.inc.php");
+require_once("lib/header.inc");
 //**************** FIN EN-TETE *************
 //On vérifie si le module est activé
 $test_plugin = sql_query1("select ouvert from plugins where nom='gestion_ateliers'");
