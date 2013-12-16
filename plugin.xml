@@ -20,6 +20,8 @@
 			<requete>
 			INSERT INTO `bas_gestion_acces_scripts` (`script`, `acces`) VALUES
 			('admin_acces_scripts.php', '_administrateur_'),
+			('admin_acces_scripts_par_script.php', '_administrateur_'),
+			('admin_acces_scripts_par_acces.php', '_administrateur_'),
 			('admin_bas.php', '_administrateur_'),
 			('admin_bas_affectations.php', '_administrateur_'),
 			('admin_bas_config.php', '_administrateur_'),
@@ -382,6 +384,8 @@
 	<administration>
 		<fichier>
 			<nomfichier autorisation="A-P-C">admin_acces_scripts.php</nomfichier>
+			<nomfichier autorisation="A-P-C">admin_acces_scripts_par_script.php</nomfichier>
+			<nomfichier autorisation="A-P-C">admin_acces_scripts_par_acces.php</nomfichier>
 			<nomfichier autorisation="A-P-C">index.php</nomfichier>
 			<nomfichier autorisation="A-P-C">admin_index.php</nomfichier>
 			<nomfichier autorisation="A-P">admin_bas.php</nomfichier>
