@@ -42,32 +42,53 @@ $_lien_item : le nom du script vers lequel pointe le menu. Du type mod_plugins/n
 function calcul_autorisation_gestion_ateliers($_login,$_lien_item){
 	// Si l'appel se fait depuis les scripts générant la page d'accueil il faut supprimer le chemin
 	$_lien_item=basename($_lien_item);
-  // Cas particulier de index_suivi.php
+
+// Cas particulier de index_suivi.php
   if ($_lien_item=="index_suivi.php") {
-    // On teste si le l'utilisateur est prof de suivi.
+	// Pour avoir accès à index_suivi.php il faut être prof et avoir des élèves ou avoir des droits
+	// sur droits sur droit_special_index_suivi.txt
+
+    // On teste si le l'utilisateur est prof ayant des élèves
     $test_prof_suivi = sql_count(sql_query("SELECT professeur FROM j_eleves_professeurs  WHERE professeur = '".$_login."'"));
     if (($test_prof_suivi == "0") and !(calcul_autorisation_gestion_ateliers($_login,"droit_special_index_suivi.txt")))
+	// Si le prof n'a pas d'élève et s'il n'a pas de droits sur droit_special_index_suivi.txt alors il n'a pas accès à index_suivi.php
         return FALSE;
   }
+  
+// Cas général
   $test1 = sql_query1("SELECT count(script) FROM bas_gestion_acces_scripts WHERE (acces = '_tous_' and script = '".$_lien_item."')");
   if ($test1 == 1) {
+	// Cas où tous les utlisateurs ont accès à ce script, on teste alors si le statut de l'utilisateur
+	// est parmi les statuts donnant accès  à ce script définis dans plugin.xml
     $_statut = sql_query1("select statut from utilisateurs where login='".$_login."'");
     $test2 = sql_query1("SELECT count(user_statut) FROM plugins_autorisations WHERE (user_statut  = '".$_statut."' and  fichier = 'mod_plugins/gestion_ateliers/".$_lien_item."')");
     if ($test2 == 1)
+		// dans plugin.xml le statut de l'utilisateur lui donne accès au script
       return TRUE;
     else
+		// dans plugin.xml le statut de l'utilisateur ne lui donne pas accès au script
       return FALSE;
   } else {
+
+
+	// Cas où tous les utlisateurs n'ont pas accès à ce script
     $call_prof_resp = mysql_query("SELECT * FROM bas_gestion_acces_scripts WHERE (acces = '" . $_login . "' and script = '".$_lien_item."')");
     $nb_result = mysql_num_rows($call_prof_resp);
     if ($nb_result != 0)
+		// le login de l'utilisateur est accocié au script dans bas_gestion_acces_scripts
+		// il a donc accès au script
       return TRUE;
     else {
+
       $_statut = sql_query1("select statut from utilisateurs where login='".$_login."'");
       $test = sql_query1("select count(script) from bas_gestion_acces_scripts  where script='".$_lien_item."' and acces='_".$_statut."_'");
       if ($test == 1)
+		// le statut de l'utilisateur est accocié au script dans bas_gestion_acces_scripts
+		// il a accès donc au script
         return TRUE;
       else
+		// le statut de l'utilisateur n'est pas accocié au script dans bas_gestion_acces_scripts
+		// il n'a donc pas accès au script
         return FALSE;
     }
   }
