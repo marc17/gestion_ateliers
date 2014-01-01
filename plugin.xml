@@ -57,7 +57,7 @@
 			('index.php', '_tous_'),
 			('index_inscrits.php', '_tous_'),
 			('index_listes.php', '_tous_'),
-			('index_suivi.php', '_tous_'),
+			('index_suivi.php', '_professeur_'),
 			('inscrire_eleves_par_atelier.php', '_administrateur_'),
 			('inscrire_eleves_par_atelier.php', '_cpe_'),
 			('liste_bas_par_eleve.php', '_professeur_'),
@@ -423,11 +423,11 @@
 			<nomfichier autorisation="A-P-C">droit_special_index_suivi.txt</nomfichier>
 			</fichier>
 		<menu>
-			<item autorisation="A" titre="Gestion des autorisations" description="Gestion des autorisations d'accès aux fonctionnalités du module">admin_acces_scripts.php</item>
+			<item autorisation="A-P-C" titre="Gestion des autorisations" description="Gestion des autorisations d'accès aux fonctionnalités du module">admin_acces_scripts.php</item>
 			<item autorisation="A-P-C" titre="Accès au module atelier" description="Saisie et visualisation des propositions d'ateliers">index.php</item>
 			<item autorisation="A-P-C" titre="Gestion des ateliers" description="Accès administrateur pour l'affectation des salles aux ateliers et la répartition des ateliers sur les créneaux horaires">admin_index.php</item>
 			<item autorisation="A-P-C" titre="Configuration générale des ateliers" description="Configuration des ateliers : dates, vérouillage/dévérouillage des différentes phases, configuration des matières, Configuration des professeurs, Paramètres généraux.">admin_bases.php</item>
-			<item autorisation="P" titre="Groupe de suivi" description="Gestion des ateliers pour mon groupe de suivi">index_suivi.php</item>
+			<item autorisation="A-P-C" titre="Groupe de suivi" description="Gestion des ateliers pour mon groupe de suivi">index_suivi.php</item>
 			<item autorisation="E" titre="Ateliers" description="Mes choix d'atelier.">index_eleve.php</item>
 		</menu>
 	</administration>

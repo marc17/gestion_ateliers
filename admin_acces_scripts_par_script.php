@@ -60,7 +60,7 @@ $tab_utilisateurs["_administrateur_"]=array("login" => "_administrateur_","nom" 
 $tab_utilisateurs["_professeur_"]=array("login" => "_professeur_","nom" => " Tous les professeurs","prenom" => "","statut" => "_professeur_");
 $tab_utilisateurs["_cpe_"]=array("login" => "_cpe_","nom" => " Tous les CPE","prenom" => "","statut" => "_cpe_");
 // On continue avec la table 'utilisateurs'
-$r_sql="SELECT login,nom,prenom,statut FROM `utilisateurs` WHERE `statut` IN ('administrateur','professeur','_cpe_') ORDER BY login";
+$r_sql="SELECT login,nom,prenom,statut FROM `utilisateurs` WHERE `statut` IN ('administrateur','professeur','cpe') ORDER BY login";
 $R_utilisateurs=mysql_query($r_sql);
 while ($un_utilisateur=mysql_fetch_assoc($R_utilisateurs)) {
 	$tab_utilisateurs[$un_utilisateur['login']]=$un_utilisateur;
@@ -116,8 +116,8 @@ function statut_compatible($statut) {
 	}
 }
 
-// Supprimer un droit d'accès sauf dans le cas admin_acces_scripts.php et _administrateur_
-if (isset($_GET['supprimer']) && !($script=="admin_acces_scripts.php" && $_GET['supprimer']=="_administrateur_")) {
+// Supprimer un droit d'accès sauf dans le cas admin_acces_scripts*.php et _administrateur_
+if (isset($_GET['supprimer']) && !((strpos($script,"admin_acces_scripts")==0) && $_GET['supprimer']=="_administrateur_")) {
 	$delete_acces = mysql_query("DELETE FROM bas_gestion_acces_scripts WHERE (script='".$script."' and acces='".$_GET['supprimer']."')");
 	if (!$delete_acces) { $msg = "Erreur lors de la suppression."; } else { $msg = "La suppression a bien été effectuée."; }
 }
@@ -137,7 +137,7 @@ if (isset($_POST['ajouter'])) {
 		$compatibilite=false;
 		switch ($tab_utilisateurs[$acces]['statut']) {
 			case "_tous_" :
-				$compatibilite=in_array("A",$t_statut_autorises)||in_array("P",$t_statut_autorises)||in_array("C",$t_statut_autorises);
+				$compatibilite=in_array("A",$t_statut_autorises)|| in_array("P",$t_statut_autorises)|| in_array("C",$t_statut_autorises);
 				break;
 			case "_administrateur_" :
 				$compatibilite=in_array("A",$t_statut_autorises);
@@ -166,6 +166,7 @@ if (isset($_POST['ajouter'])) {
 // Tableau associatif des droits :
 // clé : nom du script
 // valeur : tableau des ayant droits sur le script
+// C'est le contenu de la table bas_gestion_acces_scripts
 $tab_droits_acces_scripts=array();
 $tab_droits_acces_scripts_1=array();
 $r_sql="SELECT * FROM `bas_gestion_acces_scripts`";
@@ -185,20 +186,25 @@ require_once("../../lib/header.inc.php");
 
 echo "<p class=\"bold\">|<a href='admin_acces_scripts.php'>Retour</a>|</p><br />\n";
 
-echo "<p>Cette page permet de gérer les accès au script ".$descriptif."(".$script.").</p>";
+echo "<p>Cette page permet de gérer les accès au script ".$descriptif." (".$script.").</p>";
 
 echo "<hr />";
 
-		echo "<h2>$descriptif ($script)</h2>";
-		echo "<p style='margin-left: 40px;'>Liste des ayant droits sur ce script :<br />";
+		echo "<p style='margin-left: 40px;'>Liste des ayant droits sur le script $descriptif ($script)<br />";
 		if (array_key_exists($script,$tab_droits_acces_scripts)) {
 			foreach($tab_droits_acces_scripts[$script] as $un_acces) {
-				echo "&nbsp;&nbsp;&nbsp;".$tab_utilisateurs[$un_acces]['prenom']." ".$tab_utilisateurs[$un_acces]['nom']." (".$tab_utilisateurs[$un_acces]['statut'].")";;
-				echo " <a href='admin_acces_scripts_par_script.php?script=".$script."&supprimer=".$un_acces.add_token_in_url()."'>(Suppimer)</a><br />";
+				echo "&nbsp;&nbsp;&nbsp;".$tab_utilisateurs[$un_acces]['prenom']." ".$tab_utilisateurs[$un_acces]['nom']." (".$tab_utilisateurs[$un_acces]['statut'].")";
+				// Supprimer un droit d'accès sauf dans le cas admin_acces_scripts*.php et _administrateur_
+				if (!((strpos($script,"admin_acces_scripts")===0) && $tab_utilisateurs[$un_acces]['statut']=="_administrateur_"))
+					echo " <a href='admin_acces_scripts_par_script.php?script=".$script."&supprimer=".$un_acces.add_token_in_url()."'>(Suppimer)</a>";
+				echo "<br />";
 			}
 
 	echo "</p><hr />\n";
 }
+
+// Si tous les utlisateurs n'ont pas accès au script on peut en rajouter
+if (!in_array("_tous_",$tab_droits_acces_scripts[$script])) {
 ?>
 <h2>Ajouter un statut ou un utilisateur ayant accès à ce script</h2>
 <form style="margin-left: 40px;" method="post" action="admin_acces_scripts_par_script.php" name="choix_utilisateur">
@@ -212,20 +218,21 @@ echo "<hr />";
 		</optgroup>
 	<?php
 	$initiale_courante=0;
-	print_r($tab_droits_acces_scripts);
 	foreach($tab_utilisateurs as $un_utilisateur)
-		if ((isset($tab_droits_acces_scripts[$script])?(!in_array($un_utilisateur['login'],$tab_droits_acces_scripts[$script])):true) && statut_compatible($un_utilisateur['statut']))
-			{
-			$nom=strtoupper($un_utilisateur['nom'])." ".$un_utilisateur['prenom'];
-			$initiale=ord(strtoupper($un_utilisateur['nom']));
-			if ($initiale!=$initiale_courante)
-				{
-				$initiale_courante=$initiale;
-				echo "\t</optgroup><optgroup label=\"".chr($initiale)."\">";
+		if ((isset($tab_droits_acces_scripts[$script])?(!in_array($un_utilisateur['login'],$tab_droits_acces_scripts[$script])):true) && statut_compatible($un_utilisateur['statut'])) {
+			//
+			if (isset($tab_droits_acces_scripts[$script]) && (!in_array("_".$un_utilisateur['statut']."_",$tab_droits_acces_scripts[$script]) && !in_array("_tous_",$tab_droits_acces_scripts[$script]))) {
+				$nom=strtoupper($un_utilisateur['nom'])." ".$un_utilisateur['prenom'];
+				$initiale=ord(strtoupper($un_utilisateur['nom']));
+				if ($initiale!=$initiale_courante)
+					{
+					$initiale_courante=$initiale;
+					echo "\t</optgroup><optgroup label=\"".chr($initiale)."\">";
+					}
+				?>
+				<option value="<?php echo $un_utilisateur['login']; ?>"><?php echo $un_utilisateur['nom']." ".$un_utilisateur['prenom']." (".$un_utilisateur['statut'].")"; ?></option>
+				<?php
 				}
-			?>
-			<option value="<?php echo $un_utilisateur['login']; ?>"><?php echo $un_utilisateur['nom']." ".$un_utilisateur['prenom']." (".$un_utilisateur['statut'].")"; ?></option>
-			<?php
 			}
 	?>
 		</optgroup>
@@ -234,5 +241,6 @@ echo "<hr />";
 	<input name="ajouter" value="Ajouter cet utilisateur ou ce statut" type="submit">
 </form>
 <?php
+}
 include "./footer.inc.php";
 ?>
