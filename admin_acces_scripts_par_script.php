@@ -190,56 +190,59 @@ echo "<p>Cette page permet de gérer les accès au script ".$descriptif." (".$sc
 
 echo "<hr />";
 
-		echo "<p style='margin-left: 40px;'>Liste des ayant droits sur le script $descriptif ($script)<br />";
-		if (array_key_exists($script,$tab_droits_acces_scripts)) {
-			foreach($tab_droits_acces_scripts[$script] as $un_acces) {
-				echo "&nbsp;&nbsp;&nbsp;".$tab_utilisateurs[$un_acces]['prenom']." ".$tab_utilisateurs[$un_acces]['nom']." (".$tab_utilisateurs[$un_acces]['statut'].")";
-				// Supprimer un droit d'accès sauf dans le cas admin_acces_scripts*.php et _administrateur_
-				if (!((strpos($script,"admin_acces_scripts")===0) && $tab_utilisateurs[$un_acces]['statut']=="_administrateur_"))
-					echo " <a href='admin_acces_scripts_par_script.php?script=".$script."&supprimer=".$un_acces.add_token_in_url()."'>(Suppimer)</a>";
-				echo "<br />";
-			}
+echo "Dans plugin.xml les statuts autorisés sont : ";
+foreach($t_statut_autorises as $s) echo $s." ";
+echo "<br />";
 
-	echo "</p><hr />\n";
+echo "<p style='margin-left: 40px;'>Liste des ayant droits sur le script $descriptif ($script)<br />";
+if (array_key_exists($script,$tab_droits_acces_scripts)) {
+	foreach($tab_droits_acces_scripts[$script] as $un_acces) {
+		echo "&nbsp;&nbsp;&nbsp;".$tab_utilisateurs[$un_acces]['prenom']." ".$tab_utilisateurs[$un_acces]['nom']." (".$tab_utilisateurs[$un_acces]['statut'].")";
+		// Supprimer un droit d'accès sauf dans le cas admin_acces_scripts*.php et _administrateur_
+		if (!((strpos($script,"admin_acces_scripts")===0) && $tab_utilisateurs[$un_acces]['statut']=="_administrateur_"))
+			echo " <a href='admin_acces_scripts_par_script.php?script=".$script."&supprimer=".$un_acces.add_token_in_url()."'>(Suppimer)</a>";
+		echo "<br />";
+	}
+echo "</p><hr />\n";
 }
 
 // Si tous les utlisateurs n'ont pas accès au script on peut en rajouter
-if (!in_array("_tous_",$tab_droits_acces_scripts[$script])) {
-?>
-<h2>Ajouter un statut ou un utilisateur ayant accès à ce script</h2>
-<form style="margin-left: 40px;" method="post" action="admin_acces_scripts_par_script.php" name="choix_utilisateur">
-	<?php if (function_exists("add_token_field")) echo add_token_field(); ?>
-	Sélectionner :&nbsp;
-	<select name="acces">
-		<optgroup>
-			<option></option>
-		</optgroup>
-		<optgroup label="Statut">
-		</optgroup>
-	<?php
-	$initiale_courante=0;
-	foreach($tab_utilisateurs as $un_utilisateur)
-		if ((isset($tab_droits_acces_scripts[$script])?(!in_array($un_utilisateur['login'],$tab_droits_acces_scripts[$script])):true) && statut_compatible($un_utilisateur['statut'])) {
-			//
-			if (isset($tab_droits_acces_scripts[$script]) && (!in_array("_".$un_utilisateur['statut']."_",$tab_droits_acces_scripts[$script]) && !in_array("_tous_",$tab_droits_acces_scripts[$script]))) {
-				$nom=strtoupper($un_utilisateur['nom'])." ".$un_utilisateur['prenom'];
-				$initiale=ord(strtoupper($un_utilisateur['nom']));
-				if ($initiale!=$initiale_courante)
-					{
-					$initiale_courante=$initiale;
-					echo "\t</optgroup><optgroup label=\"".chr($initiale)."\">";
-					}
-				?>
-				<option value="<?php echo $un_utilisateur['login']; ?>"><?php echo $un_utilisateur['nom']." ".$un_utilisateur['prenom']." (".$un_utilisateur['statut'].")"; ?></option>
-				<?php
-				}
-			}
+	if (!isset($tab_droits_acces_scripts[$script]) || !in_array("_tous_",$tab_droits_acces_scripts[$script])) {
 	?>
-		</optgroup>
-	</select>
-	<input type="hidden" name="script" value="<?php echo $script; ?>">
-	<input name="ajouter" value="Ajouter cet utilisateur ou ce statut" type="submit">
-</form>
+	<h2>Ajouter un statut ou un utilisateur ayant accès à ce script</h2>
+	<form style="margin-left: 40px;" method="post" action="admin_acces_scripts_par_script.php" name="choix_utilisateur">
+		<?php if (function_exists("add_token_field")) echo add_token_field(); ?>
+		Sélectionner :&nbsp;
+		<select name="acces">
+			<optgroup>
+				<option></option>
+			</optgroup>
+			<optgroup label="Statut">
+			</optgroup>
+		<?php
+		$initiale_courante=0;
+		foreach($tab_utilisateurs as $un_utilisateur)
+			if ((isset($tab_droits_acces_scripts[$script])?(!in_array($un_utilisateur['login'],$tab_droits_acces_scripts[$script])):true) && statut_compatible($un_utilisateur['statut'])) {
+				//
+				if (!isset($tab_droits_acces_scripts[$script]) || (isset($tab_droits_acces_scripts[$script]) && (!in_array($un_utilisateur['login'],$tab_droits_acces_scripts[$script]) && !in_array("_tous_",$tab_droits_acces_scripts[$script])))) {
+					$nom=strtoupper($un_utilisateur['nom'])." ".$un_utilisateur['prenom'];
+					$initiale=ord(strtoupper($un_utilisateur['nom']));
+					if ($initiale!=$initiale_courante)
+						{
+						$initiale_courante=$initiale;
+						echo "\t</optgroup><optgroup label=\"".chr($initiale)."\">";
+						}
+					?>
+					<option value="<?php echo $un_utilisateur['login']; ?>"><?php echo $un_utilisateur['nom']." ".$un_utilisateur['prenom']." (".$un_utilisateur['statut'].")"; ?></option>
+					<?php
+					}
+				}
+		?>
+			</optgroup>
+		</select>
+		<input type="hidden" name="script" value="<?php echo $script; ?>">
+		<input name="ajouter" value="Ajouter cet utilisateur ou ce statut" type="submit">
+	</form>
 <?php
 }
 include "./footer.inc.php";
