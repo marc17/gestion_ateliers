@@ -58,25 +58,27 @@ function calcul_autorisation_gestion_ateliers($_login,$_lien_item){
 // Cas général
   $test1 = sql_query1("SELECT count(script) FROM bas_gestion_acces_scripts WHERE (acces = '_tous_' and script = '".$_lien_item."')");
   if ($test1 == 1) {
-	// Cas où tous les utlisateurs ont accès à ce script, on teste alors si le statut de l'utilisateur
-	// est parmi les statuts donnant accès  à ce script définis dans plugin.xml
+	// Cas où tous les utilisateurs ont accès à ce script dans bas_gestion_acces_scripts, on teste alors 
+	// si le statut de l'utilisateur est parmi les statuts donnant accès  à ce script définis dans plugin.xml
     $_statut = sql_query1("select statut from utilisateurs where login='".$_login."'");
     $test2 = sql_query1("SELECT count(user_statut) FROM plugins_autorisations WHERE (user_statut  = '".$_statut."' and  fichier = 'mod_plugins/gestion_ateliers/".$_lien_item."')");
     if ($test2 == 1)
 		// dans plugin.xml le statut de l'utilisateur lui donne accès au script
+		// l'accès est autorisé
       return TRUE;
     else
 		// dans plugin.xml le statut de l'utilisateur ne lui donne pas accès au script
+		// l'accès est refusé
       return FALSE;
   } else {
 
 
-	// Cas où tous les utlisateurs n'ont pas accès à ce script
+	// Cas où tous les utlisateurs n'ont pas accès à ce script dans bas_gestion_acces_scripts
     $call_prof_resp = mysql_query("SELECT * FROM bas_gestion_acces_scripts WHERE (acces = '" . $_login . "' and script = '".$_lien_item."')");
     $nb_result = mysql_num_rows($call_prof_resp);
     if ($nb_result != 0)
 		// le login de l'utilisateur est accocié au script dans bas_gestion_acces_scripts
-		// il a donc accès au script
+		// l'accès est autorisé
       return TRUE;
     else {
 
@@ -84,11 +86,11 @@ function calcul_autorisation_gestion_ateliers($_login,$_lien_item){
       $test = sql_query1("select count(script) from bas_gestion_acces_scripts  where script='".$_lien_item."' and acces='_".$_statut."_'");
       if ($test == 1)
 		// le statut de l'utilisateur est accocié au script dans bas_gestion_acces_scripts
-		// il a accès donc au script
+		// l'accès est autorisé
         return TRUE;
       else
 		// le statut de l'utilisateur n'est pas accocié au script dans bas_gestion_acces_scripts
-		// il n'a donc pas accès au script
+		// l'accès est refusé
         return FALSE;
     }
   }

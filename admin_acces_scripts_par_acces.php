@@ -120,7 +120,7 @@ function statut_compatible($acces,$script) {
 	global $t_statut_autorises,$tab_utilisateurs;
 	switch ($tab_utilisateurs[$acces]['statut']) {
 		case "_tous_" :
-			return in_array("A",$t_statut_autorises[$script])&& in_array("P",$t_statut_autorises[$script])&& in_array("C",$t_statut_autorises[$script]);
+			return in_array("A",$t_statut_autorises[$script]) && in_array("P",$t_statut_autorises[$script]) && in_array("C",$t_statut_autorises[$script]);
 			break;
 		case "_administrateur_" :
 			return in_array("A",$t_statut_autorises[$script]);
@@ -189,7 +189,7 @@ if ($acces=="") {
 		$compteur=0;
 		foreach($tab_liste_scripts as $script => $descriptif) {
 			if (statut_compatible($acces,$script)) {
-				// inutile d'ajouter un droit à un utlisateur si son son statut lui donne déjà accès au script
+				// inutile d'ajouter un droit à un utilisateur si son son statut lui donne déjà accès au script
 				if (isset($tab_droits_acces_scripts[$script]) && (!in_array("_".$tab_utilisateurs[$acces]['statut']."_",$tab_droits_acces_scripts[$script]) && !in_array("_tous_",$tab_droits_acces_scripts[$script]))) {
 					echo "<input type=\"checkbox\" name=\"scripts[]\" value=\"".$script."\"";
 					if (array_key_exists($script,$tab_droits_acces_scripts)) {
@@ -207,7 +207,7 @@ if ($acces=="") {
 				}
 			}
 		}
-	if ($compteur==0) echo "Le statut ou l'utilisateur a déjà accès à tous les scripts de cette rubrique.<br />\n";
+	if ($compteur==0) echo "Pour les scripts de cette rubrique, soit le statut ou l'utilisateur y a déjà accès, soit il ne peut y avoir accès.<br />\n";
 	}
 ?>
 	<input type="hidden" name="acces" value="<?php echo $acces; ?>">

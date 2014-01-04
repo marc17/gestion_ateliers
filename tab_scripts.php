@@ -51,7 +51,7 @@ $tab_descriptifs_scripts=array(
 		array(
 		"inscrire_eleves_par_atelier.php"=>"Inscription des élèves",
 		"admin_inscrip_rapide.php"=>"Enregistrement des inscriptions",
-		"droit_special_inscrip_rapide.txt"=>"Droits spéciaux dans inscrip_rapide.php",
+		"droit_special_inscrip_rapide.txt"=>"Droits spéciaux dans admin_nscrip_rapide.php",
 		"admin_modif_choix1.php"=>"Modification du choix 1"
 		),
 	"Scripts de gestion des absences" =>

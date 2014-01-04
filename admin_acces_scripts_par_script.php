@@ -100,7 +100,7 @@ function statut_compatible($statut) {
 	global $t_statut_autorises;
 	switch ($statut) {
 		case "_tous_" :
-			return in_array("A",$t_statut_autorises)&&in_array("P",$t_statut_autorises)&&in_array("C",$t_statut_autorises);
+			return in_array("A",$t_statut_autorises) && in_array("P",$t_statut_autorises) && in_array("C",$t_statut_autorises);
 			break;
 		case "_administrateur_" :
 			return in_array("A",$t_statut_autorises);
@@ -126,7 +126,7 @@ if (isset($_GET['supprimer']) && !((strpos($script,"admin_acces_scripts")==0) &&
 // Ajouter un droi d'accès
 if (isset($_POST['ajouter'])) {
 	if ($acces=="_tous_") {
-		// On efface tous les membres
+		// On efface tous les accès
 		mysql_query("DELETE FROM bas_gestion_acces_scripts WHERE (script='".$script."')");
 		// On insère l'enregistrement
 		$reg_data = mysql_query("INSERT INTO bas_gestion_acces_scripts SET acces='_tous_', script='".$script."'");
@@ -137,7 +137,7 @@ if (isset($_POST['ajouter'])) {
 		$compatibilite=false;
 		switch ($tab_utilisateurs[$acces]['statut']) {
 			case "_tous_" :
-				$compatibilite=in_array("A",$t_statut_autorises)|| in_array("P",$t_statut_autorises)|| in_array("C",$t_statut_autorises);
+				$compatibilite=in_array("A",$t_statut_autorises) || in_array("P",$t_statut_autorises) || in_array("C",$t_statut_autorises);
 				break;
 			case "_administrateur_" :
 				$compatibilite=in_array("A",$t_statut_autorises);
@@ -157,8 +157,8 @@ if (isset($_POST['ajouter'])) {
 			mysql_query("DELETE FROM bas_gestion_acces_scripts WHERE (script='".$script."' and acces='_tous_')");
 			// On ajoute l'accès
 			$R_ajout = mysql_query("INSERT INTO bas_gestion_acces_scripts SET acces='".$acces."', script='".$script."'");
-			if (!$R_ajout) { $msg = "Erreur lors de l'ajout de l'utilisateur ".$acces." !"; } else { $msg = "L'utilisateur a bien été ajouté !"; }
-		} else echo "Raté !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+			if (!$R_ajout) { $msg = "Erreur lors de l'ajout de l'utilisateur ".$acces." !"; } else { $msg = "L'utilisateur ou le statut a été ajouté !"; }
+		} else $msg = "L'utilisateur ou le statut n'a pas été ajouté !";;
 	}
 }
 
@@ -206,8 +206,17 @@ if (array_key_exists($script,$tab_droits_acces_scripts)) {
 echo "</p><hr />\n";
 }
 
-// Si tous les utlisateurs n'ont pas accès au script on peut en rajouter
-	if (!isset($tab_droits_acces_scripts[$script]) || !in_array("_tous_",$tab_droits_acces_scripts[$script])) {
+// Tous les statuts aurisés dans plugin.xml sont-ils autorisés dans bas_gestion_acces_scripts ?
+$tous_autorises=false;
+$t_s=array("A"=>"administrateur","P"=>"professeur","C"=>"cpe");
+if (isset($tab_droits_acces_scripts[$script])) {
+	$tous_autorises=true;
+	foreach($t_statut_autorises as $s) $tous_autorises=$tous_autorises && (in_array("_".$t_s[$s]."_",$tab_droits_acces_scripts[$script]));
+	$tous_autorises=$tous_autorises || in_array("_tous_",$tab_droits_acces_scripts[$script]);
+}
+
+// Si tous les utilisateurs n'ont pas accès au script on peut en rajouter
+	if (!$tous_autorises) {
 	?>
 	<h2>Ajouter un statut ou un utilisateur ayant accès à ce script</h2>
 	<form style="margin-left: 40px;" method="post" action="admin_acces_scripts_par_script.php" name="choix_utilisateur">
@@ -222,7 +231,7 @@ echo "</p><hr />\n";
 		<?php
 		$initiale_courante=0;
 		foreach($tab_utilisateurs as $un_utilisateur)
-			if ((isset($tab_droits_acces_scripts[$script])?(!in_array($un_utilisateur['login'],$tab_droits_acces_scripts[$script])):true) && statut_compatible($un_utilisateur['statut'])) {
+			if ((isset($tab_droits_acces_scripts[$script])?(!in_array($un_utilisateur['login'],$tab_droits_acces_scripts[$script]) && !in_array("_".$un_utilisateur['statut']."_",$tab_droits_acces_scripts[$script])):true) && statut_compatible($un_utilisateur['statut'])) {
 				//
 				if (!isset($tab_droits_acces_scripts[$script]) || (isset($tab_droits_acces_scripts[$script]) && (!in_array($un_utilisateur['login'],$tab_droits_acces_scripts[$script]) && !in_array("_tous_",$tab_droits_acces_scripts[$script])))) {
 					$nom=strtoupper($un_utilisateur['nom'])." ".$un_utilisateur['prenom'];
@@ -245,5 +254,6 @@ echo "</p><hr />\n";
 	</form>
 <?php
 }
+else echo "<p>Pour cohérence avec ce qui est défini dans plugin.xml aucun satut ou utilisateur ne peut ête ajouté à cette liste.</p>";
 include "./footer.inc.php";
 ?>

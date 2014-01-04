@@ -128,14 +128,23 @@ if (isset($_GET['supprimer']) && isset($_GET['script']) && !((strpos($_GET['scri
 $titre_page = "Gestion des ateliers - Configuration des autorisations d'accès aux scripts";
 require_once("../../lib/header.inc.php");
 //**************** FIN EN-TETE *****************
+?>
 
-echo "<p class=\"bold\">| <a href='../../accueil.php'>Retour</a> | <a href='admin_acces_scripts_par_acces.php'>Définir les droits d'un statut ou d'un utilisateur |</a></p>\n";
-echo "<br />";
-echo "<p>Cette page permet de gérer les accès aux différents script du plugin.
-<br />Il est ainsi possible de déléguer l'administration des ateliers à un utilisateur particulier en lui autorisant
-l'accès aux scripts correspondants</p>";
+<p class="bold">| <a href='../../accueil.php'>Retour</a> | <a href='admin_acces_scripts_par_acces.php'>Définir les droits d'un statut ou d'un utilisateur |</a></p><br />
 
-echo "<hr />";
+<h4>Gestion des autorisations : le principe</h4>
+<p>Dans le fichier plugin.xml sont définis, dans la section &lt;administration&gt;&lt;fichier&gt;, pour chaque script les statuts autorisés à accéder. Cela est commun à tous les plugins. Mais il est possible pour un plugin particulier de restreindre ces autorisations (mais pas de les étendre), et c'est le cas de "Gestion des ateliers". La page de "Gestion des autorisations" a pour fonction d'administrer ces restrictions. Il est ainsi possible de déléguer l'administration des ateliers à un utilisateur particulier en lui autorisant l'accès aux scripts correspondants </p>
+<br />
+<p>On peut donner accès à un script (quand cela est compatible avec ce qui est défini dans plugin.xml) à :</p>
+<p>- tous les administrateurs, professeurs et CPE</p>
+<p>- tous les utilisateurs d'un (ou plusieurs) même statut</p>
+<p>- un (ou plusieurs) utilisateurs</p>
+<br />
+<p>Le script index_suivi.php est un cas particulier, un utlisateur ne peu y avoir accès que s'il est professeur ET qu'il a des élèves, ou s'il a le droit d'accès à droit_special_index_suivi.txt.</p>
+<br />
+<p>Les droits sur les fichiers droit_special_index_suivi.txt, droit_special_inscrip_rapide.txt, droit_special_modify_bas.txt et droit_special_index.txt donnet accès à des focntinalités particulières des scripts respectifs  index_suivi .php, admin_inscrip_rapide.php,  modify_bas.php et index.php.</p>
+<br />
+<?php
 foreach($tab_descriptifs_scripts as $rubrique => $tab_liste_scripts) {
 	echo "<h2>$rubrique</h2>";
 	foreach($tab_liste_scripts as $script => $descriptif) {
