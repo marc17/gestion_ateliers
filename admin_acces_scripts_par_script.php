@@ -133,28 +133,7 @@ if (isset($_POST['ajouter'])) {
 		if (!$reg_data) { $msg = "Erreur lors de l'ajout de l'accès ".$acces." !"; } else { $msg = "A présent, tous les utilisateurs de la liste ont accès au script !"; }
 
 	} else {
-		// On vérifie le compatibilté avec les droits définis dans plugin.xml
-		$compatibilite=false;
-		switch ($tab_utilisateurs[$acces]['statut']) {
-			case "_tous_" :
-				$compatibilite=in_array("A",$t_statut_autorises) || in_array("P",$t_statut_autorises) || in_array("C",$t_statut_autorises);
-				break;
-			case "_administrateur_" :
-				$compatibilite=in_array("A",$t_statut_autorises);
-				break;
-			case "_professeur_" :
-				$compatibilite=in_array("P",$t_statut_autorises);
-				break;
-			case "_cpe_" :
-				$compatibilite=in_array("C",$t_statut_autorises);
-				break;
-			default :
-				$compatibilite=in_array(strtoupper(substr($tab_utilisateurs[$acces]['statut'],0,1)),$t_statut_autorises);
-		}
-		// C'est bon on continue
-		if ($compatibilite) {
-			// On supprime l'accès _tous_
-			mysql_query("DELETE FROM bas_gestion_acces_scripts WHERE (script='".$script."' and acces='_tous_')");
+		if (statut_compatible($tab_utilisateurs[$acces]['statut'])) {
 			// On ajoute l'accès
 			$R_ajout = mysql_query("INSERT INTO bas_gestion_acces_scripts SET acces='".$acces."', script='".$script."'");
 			if (!$R_ajout) { $msg = "Erreur lors de l'ajout de l'utilisateur ".$acces." !"; } else { $msg = "L'utilisateur ou le statut a été ajouté !"; }

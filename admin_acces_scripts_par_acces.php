@@ -69,14 +69,19 @@ while ($un_utilisateur=mysql_fetch_assoc($R_utilisateurs)) {
 $acces=isset($_POST['acces'])?$_POST['acces']:(isset($_GET['acces'])?$_GET['acces']:"");
 
 if (isset($_POST['modification'])) {
-	// C'est un peu lourdingue mais $_POST['scripts_temoin'] donne la liste 
-	// des cases à cocher présentes et ça passe sur petite table comme bas_gestion_acces_scripts
-	foreach($_POST['scripts_temoin'] as $script) {
-		mysql_query("delete from `bas_gestion_acces_scripts` where `script`='".$script."' and `acces`='".$acces."';");
-	}
+	// $_POST['scripts_coches_avant'] donne la liste 
+	// des cases cochées avant modifications
+	// et $_POST['scripts'] celles qui sont cochée après
+	if (isset($_POST['scripts_coches_avant'])) {
+		foreach($_POST['scripts_coches_avant'] as $script) {
+			if (!isset($script,$_POST['scripts']) || !in_array($script,$_POST['scripts']))
+				mysql_query("delete from `bas_gestion_acces_scripts` where `script`='".$script."' and `acces`='".$acces."';");
+		}
+}
 	if (isset($_POST['scripts'])) {
 		foreach($_POST['scripts'] as $script) {
-			mysql_query("insert into `bas_gestion_acces_scripts` values('".$script."','".$acces."');");
+			if (!isset($script,$_POST['scripts_coches_avant']) || !in_array($script,$_POST['scripts_coches_avant']))
+				mysql_query("insert into `bas_gestion_acces_scripts` values('".$script."','".$acces."');");
 		}
 	}
 }
@@ -202,7 +207,9 @@ if ($acces=="") {
 					if ((strpos($script,"admin_acces_scripts")===0) && $tab_utilisateurs[$acces]['statut']=="_administrateur_") echo " disabled=\"disabled\"";
 					echo ">\n";
 					echo "$descriptif ($script)<br />\n";
-					echo "<input type=\"hidden\" name=\"scripts_temoin[]\" value=\"".$script."\" >";
+					if (in_array($acces,$tab_droits_acces_scripts[$script])) {
+						echo "<input type=\"hidden\" name=\"scripts_coches_avant[]\" value=\"".$script."\" >";
+					}
 					$compteur++;
 				}
 			}
